@@ -1,0 +1,427 @@
+{
+    "steps" : [
+        {
+            "title" : "Một trang web (Website) hoạt động như thế nào?",
+            "diagramState" : "start",
+            "focus" : "You"
+        }
+        ,
+        {
+            "title" : "Các trang web được xem bằng cách sử dụng một chương trình phần mềm được gọi là trình duyệt web.",
+            "diagramState" : "web-browser",
+            "focus" : "Web Browser",
+            "focusPath" : ["You", "Web Browser"]
+        }
+
+        ,
+        {
+            "title" : "Phần mềm duyệt web chạy trên máy tính xách tay hoặc điện thoại thông minh của bạn giống như phần mềm Excel hoặc Photoshop.",
+            "diagramState" : "web-browser-platforms",
+            "focus" : ["Laptop", "Phone", "Tablet"]
+        }
+
+        ,
+        {
+            "title" : "Trình duyệt web tải xuống nội dung qua mạng Internet.",
+            "diagramState" : "internet",
+            "focus" : "Internet",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "HTML"],
+                ["Internet", "Image"],
+                ["Internet", "Video"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Trình duyệt web có thể tải xuống và truyền trực tuyến các tệp như văn bản, hình ảnh, pdf, phim và nhạc.",
+            "diagramState" : "internet",
+            "focus" : ["HTML", "Image", "Video"]
+        }
+
+        ,
+        {
+            "title" : "Các tệp này được lưu trữ trên các máy tính đặt ở 1 nơi khác được gọi là máy chủ (Server).",
+            "diagramState" : "server",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ cũng là máy tính. Nó chứa các tệp trong hệ thống quản lý tệp của nó giống như các tệp và thư mục trên máy tính cá nhân của bạn.",
+            "diagramState" : "server",
+            "focus" : "Filesystem"
+        }
+
+        ,
+        {
+            "title" : "Về mặt kỹ thuật, toàn bộ mạng máy tính này là Internet. Biểu tượng Internet chỉ minh họa các kết nối trong mạng.",
+            "diagramState" : "server",
+            "focus" : ["Phone", "Laptop", "Tablet", "Internet", "Server"]
+        }
+
+
+        ,
+        {
+            "title" : "Máy chủ chấp nhận yêu cầu Internet được gọi là Máy chủ Web (Web Servers).",
+            "diagramState" : "server",
+            "focus" : "Server",
+            "focusPath" : ["You", "Laptop", "Internet", "Server"]
+        }
+
+        ,
+        {
+            "title" : "Để chấp nhận các yêu cầu Internet, máy chủ chạy một chương trình phần mềm được gọi là web-server.",
+            "diagramState" : "static-server",
+            "focus" : "Web Server"
+        }
+
+        ,
+        {
+            "title" : "Phần mềm máy chủ web quyết định các tệp và chương trình nào là được phép truy cập từ Internet.",
+            "diagramState" : "static-server",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+                ["Filesystem", "HTML"],
+                ["Filesystem", "Image"]
+            ],
+            "disable" : ["Video"]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ cũng có thể chứa tệp riêng tư không được phép truy cập từ trên web ...",
+            "diagramState" : "security-gate",
+            "focus" : ["Passwords", "Secrets"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Do đó, các yêu cầu tải trang web (web requests) được xử lý bởi máy chủ web, hoạt động như một loại cổng bảo mật.",
+            "diagramState" : "security-gate",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server"],
+                ["Anna", "Phone", "Internet", "Server", "Web Server"]
+            ],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Tất cả các trang web chỉ là văn bản. Ngay cả phương tiện truyền thông như hình ảnh và video được mã hóa và được gửi dưới dạng tệp dựa trên văn bản.",
+            "diagramState" : "security-gate",
+            "focus" : ["HTML", "Video", "Image"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Khi có yêu cầu đến, máy chủ xử lý yêu cầu và gửi lại văn bản mô tả trang web mà bạn thấy.",
+            "diagramState" : "security-gate",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+                ["Filesystem", "HTML"],
+                ["Filesystem", "Image"],
+                ["Filesystem", "Video"]
+            ],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Cách đơn giản nhất để gửi nội dung này tới người dùng là dành cho máy chủ web để truy xuất nó từ hệ thống tệp riêng của mình.",
+            "diagramState" : "security-gate",
+            "focus" : ["Filesystem"],
+            "focusPath" : ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Điều đó có nghĩa là trang Amazon.com có hàng triệu trang sản phẩm được lưu trữ dưới dạng tệp?",
+            "diagramState" : "static-server-amazon",
+            "focus" : ["product-1","product-2","product-3","product-4"]
+        }
+
+        ,
+        {
+            "title" : "Tạo hàng triệu tệp trang sản phẩm sẽ tốn rất nhiều thời gian và rất khó bảo trì.",
+            "diagramState" : "millions-pages"
+        }
+
+        ,
+        {
+            "title" : "Việc cập nhật bố cục trang sản phẩm sẽ dẫn đến phải chỉnh sửa từng tệp đơn ư?!",
+            "diagramState" : "millions-pages",
+            "focus" : ["product-1","product-2","product-3","product-4", "product-5","product-6","product-7","product-8", "product-9","product-10","product-11","product-12"]
+        }
+
+        ,
+        {
+            "title" : "Không, chúng ta sẽ có một Ứng dụng web là chương trình phần mềm có thể tạo trang theo yêu cầu.",
+            "diagramState" : "web-application",
+            "focus" : ["Application"]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ web được định cấu hình để định tuyến các yêu cầu đến ứng dụng web thay vì cung cấp tệp trực tiếp.",
+            "diagramState" : "web-application",
+            "focus" : ["Web Server"],
+            "focusPath" : ["Web Server", "Application"]
+        }
+
+        ,
+        {
+            "title" : "Các ứng dụng web có thể đọc từ một tệp mẫu và xây dựng một trang html động.",
+            "diagramState" : "templates",
+            "focus" : ["Templates"],
+            "focusPath" : ["Application", "Templates"]
+        }
+
+        ,
+        {
+            "title" : "Điều này có nghĩa là các trang web không thực sự tồn tại, một ứng dụng chỉ tạo ra chúng khi có người cần hiển thị.",
+            "diagramState" : "templates",
+            "focus" : ["Application"]
+        }
+
+
+        ,
+        {
+            "title" : "Một ứng dụng web có thể tương tác với một cơ sở dữ liệu.",
+            "diagramState" : "database",
+            "focus" : "Database",
+            "focusPath" : ["Application", "Templates", "Database"]
+        }
+
+        ,
+        {
+            "title" : "Cơ sở dữ liệu là một chương trình phần mềm được cài đặt trên máy chủ giúp lưu trữ và truy cập dữ liệu hiệu quả.",
+            "diagramState" : "database",
+            "focus" : "Database"
+        }
+
+        ,
+        {
+            "title" : "Chúng ta có thể sử dụng cơ sở dữ liệu để lưu trữ hàng triệu sản phẩm của Amazon dưới dạng dữ liệu: mô tả, giá, kích thước, hình ảnh.",
+            "diagramState" : "database-data",
+            "focus" : ["Product 1", "Product 2", "Product 3", "Product 4"],
+            "focusPaths" : [
+                ["Database", "Product 1"],
+                ["Database", "Product 2"],
+                ["Database", "Product 3"],
+                ["Database", "Product 4"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Ứng dụng web sẽ truy vấn (đọc) cơ sở dữ liệu và điền các mẫu html để tạo ra trang sản phẩm động.",
+            "diagramState" : "database-data",
+            "focus" : "Templates",
+            "focusPath" : ["Application", "Templates", "Database", "Product 1"]
+        }
+
+        ,
+        {
+            "title" : "Dữ liệu sản phẩm được sử dụng để điền một mẫu trang có các giá trị gắn động dạng như {price}, {description}, v.v.",
+            "diagramState" : "database-data",
+            "focus" : "Templates"
+        }
+
+        ,
+        {
+            "title" : "Bây giờ nếu bạn muốn thay đổi giao diện trang xem sản phẩm, bạn chỉ phải thay đổi một tệp duy nhất. :D Quá sướng",
+            "diagramState" : "database-data",
+            "focus" : "Templates"
+        }
+
+        ,
+        {
+            "title" : "Các chương trình phần mềm của chúng ta chạy trên một máy chủ vật lý (1 máy tính). Mỗi máy chủ có giới hạn vật lý về số lượng yêu cầu hiển thị html mà nó có thể xử lý.",
+            "diagramState" : "database-data",
+            "focus" : ["Server", "Web Server", "Database", "Application"]
+        }
+
+        ,
+        {
+            "title" : "Để xử lý nhiều yêu cầu hơn, hoặc mở rộng ứng dụng của bạn, bạn có thể di chuyển phần mềm cơ sở dữ liệu của bạn đến máy chủ cơ sở dữ liệu riêng của mình.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Database Server"
+        }
+
+
+        ,
+        {
+            "title" : "Giờ đây, máy chủ ứng dụng của bạn có thể tập trung vào việc phân phối các yêu cầu duyệt web,",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Trong khi máy chủ cơ sở dữ liệu của bạn nhận được nhiều sức mạnh tính toán hơn để quản lý cơ sở dữ liệu.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Database Server"
+        }
+
+        ,
+        {
+            "title" : "Một máy chủ duy nhất có thể là một nút thắt cổ chai.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ ứng dụng không còn xử lý tải cơ sở dữ liệu nữa, nhưng nó vẫn chịu trách nhiệm cho tất cả các requests.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Chúng ta có thể giúp cái máy chủ chạy chậm này bằng cách thêm nhiều bạn của nó vào để san sẻ cân bằng tải.",
+            "diagramState" : "multi-app-architecture",
+            "focus" : ["Server", "Server (clone 1)", "Server (clone 2)"]
+        }
+
+        ,
+        {
+            "title" : "Nhiều máy chủ ứng dụng sẽ phân bổ các yêu cầu tải trang web (cân bằng tải).",
+            "diagramState" : "multi-app-architecture",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server (clone 2)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Làm thế nào để chúng ta gửi yêu cầu đến các máy chủ mới vừa thêm vào?",
+            "diagramState" : "multi-app-architecture",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server (clone 2)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ proxy ngược ủy quyền các yêu cầu trên nhiều máy chủ ứng dụng.",
+            "diagramState" : "reverse-proxy",
+            "focus" : "Reverse Proxy"
+        }
+
+        ,
+        {
+            "title" : "Proxy ngược được chèn trước máy chủ ứng dụng của chúng tôi để yêu cầu chuyển trực tiếp đến proxy ngược.",
+            "diagramState" : "reverse-proxy",
+            "focus" : "Reverse Proxy",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Proxy ngược chạy chương trình phần mềm máy chủ web của riêng nó.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : "reverse-proxy-web-server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ web trên máy chủ proxy ngược được định cấu hình để định tuyến các yêu cầu đến các máy chủ khác.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focusPaths" : [
+                ["reverse-proxy-web-server", "Server"],
+                ["reverse-proxy-web-server", "Server (clone 1)"],
+                ["reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Sử dụng nhiều máy chủ ứng dụng nhỏ được gọi là mở rộng theo chiều ngang.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Server", "Server (clone 1)", "Server (clone 2)"],
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Chia tỷ lệ theo chiều ngang thường là chi phí hiệu quả - nó rẻ hơn việc mua nhiều máy chủ đơn lẻ nhưng mạnh.",
+            "diagramState" : "reverse-proxy-web-server"
+        }
+
+
+        ,
+        {
+            "title" : "Mở rộng theo chiều ngang giúp giảm bớt rủi ro.",
+            "diagramState" : "reverse-proxy-web-server",
+            "crossOut" : ["Server"],
+            "disable" : ["Web Server", "Application", "Templates", "Filesystem"]
+        }
+
+        ,
+        {
+            "title" : "Nhiều máy chủ có nghĩa là một số máy chủ có thể bị lỗi và các máy chủ khác sẽ nhận tải.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+            ,
+            "crossOut" : ["Server"],
+            "disable" : ["Web Server", "Application", "Templates", "Filesystem"]
+        }
+
+        ,
+        {
+            "title" : "Một máy chủ cơ sở dữ liệu tập trung duy trì tính toàn vẹn dữ liệu trên các máy chủ ứng dụng.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Database Server"],
+            "focusPaths" : [
+                ["Application", "Database Server"],
+                ["App clone 1", "Database Server"],
+                ["App clone 2", "Database Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Điều này giải quyết trường hợp yêu cầu của người dùng sẽ được xử lý bởi app1 trước, sau đó yêu cầu khác của cùng một người dùng được xử lý bởi app2.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Database Server"],
+            "focusPaths" : [
+                ["Server", "Web Server", "Application", "Database Server"],
+                ["Server (clone 1)", "Web Server clone 1", "App clone 1", "Database Server"],
+                ["Server (clone 2)", "Web Server clone 2", "App clone 2", "Database Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Như vậy là bạn đã hiểu hết về cơ chế hoạt động theo mô hình Client-Server của các máy chủ và các trang web rồi đó. Các bạn hãy tìm thêm tài liệu để đọc thêm nhé ^^!",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["You"]
+        }
+    ]
+}

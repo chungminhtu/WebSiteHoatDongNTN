@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Một Website hoạt động như thế nào</title>
+    <meta content='text/html;charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:300' type='text/css' rel='stylesheet' media='all'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js" integrity="sha256-va1Vhe+all/yVFhzgwmwBgWMVfLHjXlNJfvsrjUBRgk=" crossorigin="anonymous"></script>
+
+    <script>
+            var NIL = {};
+        // Render a course.
+        NIL.course = function(course) {
+            var diagram = new NIL.Diagram(course);
+        
+            // SVG visualization
+            var world = d3.select('body').append('div').attr('id', 'world')
+                            .append("svg:svg")
+                                .attr('viewBox','0 0 1200 600')
+                                .append("svg:g")
+            ;
+            // Textual description
+            var description = new NIL.Description(world);
+        
+            // Navigation components
+            var navigation = new NIL.Navigation({
+                diagram : diagram,
+                selector : '#prev-next',
+                tocSelector : '#table-of-contents',
+                stepToggleSelector : '#steps-count'
+            })
+        
+            diagram.on('change', function(graph) {
+                description.update(graph.meta('title'), graph.meta('content'));
+        
+                NIL.Display.nodes(world, graph.nodes());
+                NIL.Display.nodeOverlays(world, graph);
+                NIL.Display.connectionLinks(world, graph.connections(), 'connect');
+                NIL.Display.livePaths(world, graph, 'focusPath');
+        
+                navigation.update(graph.meta('index'), graph.meta('total'));
+            })
+        
+            // Discern and load the step from the URL.
+            var step = parseInt(window.location.hash.substring(1));
+            step = (step > 0) ? (step - 1) : 0;
+            diagram.get(step);
+        }
+        ;
+        NIL.Description = function(container) {
+            this.update = update;
+        
+            var d3Container = container
+                                .append('g')
+                                    .attr('class', 'description')
+                                    .attr("text-anchor", 'middle')
+                                    .attr('transform', 'translate(600,50)')
+            ;
+        
+            function update(heading, content) {
+                d3Container
+                    .style('opacity', 0)
+                    .selectAll('text').remove()
+                ;
+        
+                // var width = d3Container
+                //                 .append('svg:text')
+                //                     .text(heading)
+                //                     .attr('y', 0)
+                //                     .node().clientWidth
+                // ;
+                var width = 600;
+                // line-break if needed
+                if(width > 550) {
+                    var words = heading.split(' '),
+                        half = Math.ceil(words.length/2),
+                        firstLine = words.slice(0, half).join(' '),
+                        secondLine = words.slice(half, words.length).join(' ')
+                    ;
+        
+                    d3Container
+                        .selectAll('text').remove()
+                    ;
+                    d3Container
+                        .append('svg:text')
+                            .text(firstLine)
+                    ;
+                    d3Container
+                        .append('svg:text')
+                            .attr('y', 40)
+                            .text(secondLine)
+                    ;
+                }
+                else if(content && content.length > 0) {
+                    d3Container
+                        .append("foreignObject")
+                            .attr('transform', 'translate(-400,20)')
+                            .attr("width", 400)
+                            .attr("height", 100)
+                            .append("xhtml:body")
+                                .append('xhtml:div')
+                                .attr('class', 'sub-description')
+                                    .html(content)
+                    ;
+                }
+        
+                d3Container
+                    .transition()
+                        //.delay(100)
+                        .duration(400)
+                        .style('opacity', 1);
+            }
+        }
+        ;
+        // A <Diagram> is the highest level model representation of a data visualization.
+        // A Diagram has many <States>s where a state represents a specific, navigatigable state of a Diagram.
+        // A State models instructions for building the Diagram at a particular state.
+        // States produce <Graph>s.
+        // A Graph models the actual graphical elements and coordinates used by d3 to create the visualization.
+        // 
+        // Usage:
+        // 
+        // A Diagram consumes 'state instructions' which are loaded from a remote data-source.
+        // We can ask the diagram to return a graph based on a given courseStep index.
+        // Each courseStep references a diagram state.
+        // The diagram is lazily evaluated so you must listen for the 'change' event:
+        //
+        //    var diagram = new NIL.Diagram({ diagramUrl : '/diagram.json', contentUrl : '/content.json' });
+        //    diagram.on('change', function(graph) {
+                // Render the graph here.
+        //    })
+        //
+        //    // Pragmatically get a courseStep:
+        //    diagram.get(0);
+        NIL.Diagram = function(config) {
+            if(!config) throw("Diagram endpoints are required");
+            if(!config.iconsUrl) throw("'iconsUrl' endpoint is required");
+            this.config = config;
+        
+            var dispatch = d3.dispatch('loaded', 'change');
+        
+            // Add event listeners.
+            this.on = function(type, listener) {
+                dispatch.on(type, listener);
+            }
+        
+            // Get graph at courseStep <index>.
+            this.get = function(index) {
+                resolve(function() {
+                    getGraph(index);
+                })
+            }
+        
+            // Get graph at courseStep <index> where <index> is coerced to remain within courseStep bounds.
+            this.getBounded = function(index) {
+                resolve(function() {
+                    index = boundedIndex(index);
+                    getGraph(index);
+                })
+            }
+        
+            // Get all courseSteps.
+            // The callback receives:
+            //  [Array] - courseSteps. An ordered list of courseSteps.
+            this.courseSteps = function(callback) {
+                resolve(function() {
+                    callback(CourseSteps)
+                })
+            }
+        
+            // PRIVATE
+            // Private functions assume the data has loaded.
+        
+            var AllowedMethods = ['add', 'update', 'remove'],
+                States,
+                CourseSteps,
+                StateIds = {}
+            ;
+        
+            // Resolve the state (data) of the diagram.
+            // Data comes from a remote source so every public function should
+            // execute its logic as a callback to resolve();
+            function resolve(callback) {
+                if(CourseSteps) {
+                    callback();
+                }
+                else {
+                    d3.json(contentUrl(), function(courseData) {
+                        if(courseData) {
+                            d3.json(diagramUrl(), function(diagramData) {
+                                if(diagramData) {
+                                    States = diagramData.states;
+                                    processStateIds(diagramData.states);
+                                    CourseSteps = courseData.steps;
+                                    CourseSteps.forEach(function(step, i) {
+                                        step.index = i;
+                                        step.diagramStateIndex = StateIds[step.diagramState];
+                                    })
+        
+                                    dispatch.loaded();
+                                    callback();
+                                }
+                                else {
+                                    throw("Could not retrieve data from: " + diagramUrl() );
+                                }
+                            })
+        
+                        }
+                        else {
+                            throw("Could not retrieve data from: " + contentUrl() );
+                        }
+                    })
+        
+                }
+            }
+        
+            function processStateIds(states) {
+                states.forEach(function(state, i) {
+                    if(state.diagramState) {
+                        StateIds[state.diagramState] = i;
+                    }
+                })
+            }
+        
+            // This is asking me for a courseStep index.
+            // diagrams are index dependent based on building the graph.
+            // Example: CourseSteps[0] -> States[2]
+            // The graph is not directly returned, rather it is emitted on the 'change' event.
+            // ex: diagram.on('change', function(graph) {});
+            function getGraph(index) {
+                var stateIndex = CourseSteps[index].diagramStateIndex,
+                    states = States.slice(0, stateIndex+1);
+                var positions = states.reduce(function(accumulator, state) {
+                                    if(state.positions) {
+                                        for(key in state.positions) {
+                                            accumulator[key] = state.positions[key];
+                                        }
+                                    }
+                                    return accumulator;
+                                  }, {});
+                var connections = states.reduce(function(accumulator, state) {
+                                    if(state.connections) {
+                                        for(key in state.connections) {
+                                            accumulator[key] = state.connections[key];
+                                        }
+                                    }
+                                    return accumulator;
+                                  }, {});
+        
+                var items = JSON.parse(JSON.stringify(states.shift().actions[0].items)),
+                    graph = new NIL.Graph(processItems(items)),
+                    metadata = {};
+        
+                // Note this process mutates the graph object in place.
+                states.reduce(function(accumulator, state) {
+                    return merge(accumulator, state);
+                }, graph);
+        
+                graph.position(positions);
+                graph.connections(connections);
+        
+                graph.setMeta(CourseSteps[index]);
+                graph.setMeta({ "total" : CourseSteps.length });
+        
+                dispatch.change(graph);
+            }
+        
+            // stay in bounds
+            function boundedIndex(index) {
+                if (index < 0) {
+                    index = CourseSteps.length-1;
+                }
+                else if (index > CourseSteps.length-1) {
+                    index = 0;
+                }
+        
+                return index;
+            }
+        
+            function merge(graph, state) {
+                var actions = state.actions || [];
+                if(actions.length === 0) {
+                    throw "The diagramState '"+ state.diagramState + "' has 0 action statements."
+                }
+        
+                actions.forEach(function(action) {
+                    verifyMethod(action.method);
+        
+                    switch (action.method) {
+                        case "add":
+                            graph.add(processItems(action.items));
+                            break;
+                        case "update":
+                            graph.update(action.items);
+                            break;
+                        case "remove":
+                            var names = action.items.map(function(item){ return item.id });
+                            graph.drop(names);
+                            break;
+                    }
+                })
+        
+                return graph;
+            }
+        
+            function processItems(items) {
+                items.forEach(function(d) {
+                    d.iconsUrl = config.iconsUrl;
+                })
+                return items;
+            }
+        
+            function verifyMethod(method) {
+                if(AllowedMethods.indexOf(method) === -1) {
+                    throw("The method: '" + method + "' is not recognized."
+                            + "\n Supported methods are: " + AllowedMethods.toString());
+                }
+            }
+        
+            function contentUrl() {
+                return config.contentUrl + '?' + Math.random();
+            }
+        
+            function diagramUrl() {
+                return config.diagramUrl + '?' + Math.random();
+            }
+        }
+        ;
+        // Display a <Graph> using d3.
+        NIL.Display = (function() {
+            var config = { duration : 500 };
+        
+            function nodes(svgContainer, _nodes) {
+                // Update the nodes
+                var node = svgContainer.selectAll("g.node")
+                    .data(_nodes, function(d) { return d._id });
+        
+                var nodeEnter = node.enter().append("svg:g")
+                    .attr('class', function(d){ return 'node ' + d.icon })
+                    .attr("transform", function(d) {
+                        return "translate(" + (d.x0 || 0) + "," + (d.y0 || 0) + ")";
+                    })
+        
+                nodeEnter.call(NIL.Style.icon);
+        
+                nodeEnter
+                    .filter(function(d) { return !!d.text })
+                    .call(NIL.Style.text)
+        
+                nodeEnter.call(NIL.Style.labels);
+        
+                // Transition nodes to their new position.
+                var nodeUpdate = node.transition()
+                    .duration(config.duration)
+                    .attr("transform", function(d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    });
+        
+                nodeUpdate.select("text")
+                    .style("fill-opacity", 1);
+        
+        
+                node.exit().remove();
+        
+                return node;
+            }
+        
+            function nodeOverlays(svgContainer, graph) {
+                var types = ['focus', 'crossOut', "disable"];
+                var nodes = svgContainer.selectAll("g.node");
+        
+                types.forEach(function(type) {
+                    nodes
+                        .data(graph.metaItems(type), function(d) { return d._id })
+                        .call(NIL.Style[type]);
+                })
+            }
+        
+            // Update link connections between items.
+            // @param[Array] linkData - formated linkData for d3.
+            // @param[String] namespace - used to preserve grouping and uniqueness.
+            function connectionLinks(svgContainer, linkData, namespace) {
+                var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x, d.y]; });
+                var classname = 'link-' + namespace;
+                // Update the links.
+                var link = svgContainer.selectAll("path." + classname)
+                    .data(linkData, function(d) { return d.source._id + '.' + d.target._id; });
+        
+                // Enter any new links at the parent's previous position.
+                var linkEnter = link.enter().insert("svg:path", "g")
+                    .style('stroke-opacity', 0)
+                    .attr("class", function(d) {
+                        return (d.source.public && d.target.public)
+                                    ? classname + ' public'
+                                    : classname;
+                    })
+                    .attr("d", diagonal);
+        
+                link.transition()
+                    .duration(config.duration)
+                        .style('stroke-opacity', 1)
+                        .attr("d", diagonal);
+        
+        
+                link.exit().remove();
+        
+                return link;
+            }
+        
+            // Similar to connectionLinks but adds animated directional flow icons.
+            // @param[Array] linkData - formated linkData for d3.
+            // @param[String] namespace - used to preserve grouping and uniqueness.
+            // @param[Boolean] reverse - set true to reverse animation direction.
+            function livePaths(svgContainer, graph, namespace, reverse) {
+                var linkData = diagonalFocusPathLinks(graph);
+                var pathData = connectionLinks(svgContainer, linkData, namespace)
+                    .call(NIL.Style.pulsePath)
+        
+                updateFlowIcons(svgContainer, linkData, pathData[0], namespace, reverse);
+        
+                return pathData;
+            }
+        
+            // @param[Array] linkData - formated linkData for d3.
+            // @param[Array] paths - actual SVG path DOM nodes required.
+            // @param[String] namespace - used to preserve grouping and uniqueness.
+            function updateFlowIcons(svgContainer, linkData, paths, namespace, reverse) {
+                var markerData = [];
+                paths.map(function(d, i) {
+                    if(d) {
+                        var slope = (linkData[i].target.y - linkData[i].source.y)/
+                                        (linkData[i].target.x - linkData[i].source.x);
+                        // this coincides with the transform(rotate()) format (clockwise degrees)
+                        var degree = Math.atan(slope) * (180/Math.PI);
+                        markerData.push({
+                            path: d,
+                            degree : degree,
+                            reverse : reverse,
+                            iconsUrl : linkData[i].source.iconsUrl,
+                            _id : (linkData[i].source._id + linkData[i].target._id + namespace)
+                        });
+                    }
+                });
+        
+                var markers = svgContainer.selectAll("g." + namespace)
+                                .data(markerData, function(d) { return d._id });
+        
+                var markersEnter = markers.enter().append("svg:g")
+                    .attr('class', namespace + ' flow-icon')
+                    .call(NIL.Style.flowIcon)
+                ;
+        
+                markers.transition()
+                    .delay(400)
+                    .duration(1500)
+                    .attrTween("transform", function(d) {
+                        var l = d.path.getTotalLength()/2; // mid-point
+                          return function(t) {
+                            var offset = t * l;
+                            if (d.reverse) {
+                                offset = d.path.getTotalLength() - offset;
+                            }
+                            var p = d.path.getPointAtLength(offset);
+                            return "translate(" + p.x + "," + p.y + ")";
+                          };
+                    })
+        
+                markers.exit().transition()
+                    .duration(config.duration)
+                    .style("fill-opacity", 0)
+                    .remove();
+        
+                return markers;
+            }
+        
+        
+            // @return[Array] link data for building lines with d3.svg.diagonal().
+            function diagonalFocusPathLinks(graph) {
+                var links = [],
+                    paths = [];
+        
+                if (graph.metaItems('focusPath').length > 0) {
+                    var paths = [graph.metaItems('focusPath')];
+                } else if (graph.meta('focusPaths')) {
+                    var paths = graph.meta('focusPaths').map(function(path) {
+                        return graph.findAll(path);
+                    })
+                }
+        
+                paths.forEach(function(path) {
+                    links = links.concat(diagonalPathLinks(path));
+                })
+        
+                return links;
+            }
+        
+            // @param[Array] path - ordered item objects denoting desired path.
+            // @return[Array] link objects for the path for use with d3.svg.diagonal().
+            function diagonalPathLinks(path) {
+                var links = [];
+                path.forEach(function(d, i) {
+                    if(path[i+1]) {
+                        links.push({
+                            source: d,
+                            target: path[i+1]
+                        });
+                    }
+                })
+        
+                return links;
+            }
+        
+            return ({
+                nodes : nodes,
+                nodeOverlays : nodeOverlays,
+                connectionLinks : connectionLinks,
+                livePaths : livePaths
+            })
+        })();
+        // The Graph object models our data format as a graph of nodes/items and connections.
+        NIL.Graph = function(items) {
+            this.get = get;
+            this.getAll = getAll;
+            this.find = find;
+            this.findAll = findAll;
+            this.set = set;
+            this.add = add;
+            this.update = update;
+            this.drop = drop;
+        
+            this.meta = meta;
+            this.setMeta = setMeta;
+            this.metaItems = metaItems;
+        
+            this.nodes = nodes;
+            this.position = position;
+            this.connections = connections;
+        
+            var __dict__ = dictify(items),
+                __meta__ = {},
+                __connectionLinks__ = []
+            ;
+        
+            function meta(key) {
+                return __meta__[key];
+            }
+        
+            function setMeta(attributes) {
+                for (key in attributes) {
+                    __meta__[key] = attributes[key];
+                }
+            }
+        
+            // Get items mappped from a meta attribute holding item ids.
+            function metaItems(key) {
+                return findAll(meta(key));
+            }
+        
+            // Get an item.
+            function get(key) {
+                return __dict__[key];
+            };
+        
+            // Set an item.
+            function set(key, value) {
+                __dict__[key] = value;
+            };
+        
+            // Get an item or throw error if not found.
+            function find(key) {
+                if(get(key)) {
+                    return get(key);
+                }
+                else {
+                    throw "Could not find item using id: " + key;
+                }
+            }
+        
+            function getAll(keys) {
+                var items = [];
+                coerceArray(keys).forEach(function(name) {
+                    if(get(name)) {
+                        items.push(get(name));
+                    }
+                })
+        
+                return items;
+            };
+        
+            function findAll(keys) {
+                return coerceArray(keys).map(function(name) {
+                    return find(name);
+                })
+            };
+        
+            // Delete an item.
+            function _delete(key) {
+                delete __dict__[key];
+            }
+        
+            // Add an item to the graph in relation (mapped) to another item.
+            function add(items) {
+                addToDict(items);
+            }
+        
+            // Update item attributes.
+            function update(items) {
+                coerceArray(items).forEach(function(item) {
+                    for(key in item) {
+                        __dict__[item.id][key] = item[key];
+                    }
+                })
+            }
+        
+            // Drop one or more items from the graph.
+            function drop(names) {
+                if(!Array.isArray(names)) {
+                    names = [names];
+                }
+                names.forEach(function(name) {
+                    _delete(name);
+                })
+            }
+        
+            // Set x and y coordinates for each item.
+            // Note this is mutable service, it mutates the graph.
+            function position(data) {
+                for(id in __dict__) {
+                    __dict__[id]._id = __dict__[id].id || __dict__[id].name;
+                    var coord = {
+                        x : data[id][0],
+                        y : data[id][1] + 130
+                    }
+        
+                    __dict__[id].x0 = 600;
+                    __dict__[id].y0 = 500;
+                    __dict__[id].x = coord.x;
+                    __dict__[id].y = coord.y;
+                }
+        
+                for(id in __dict__) {
+                    if(__dict__[id].from && get(__dict__[id].from)) {
+                        var from = get(__dict__[id].from);
+                        __dict__[id].x0 = from.x;
+                        __dict__[id].y0 = from.y;
+                    }
+                }
+            }
+        
+            function nodes() {
+                return d3.values(__dict__);
+            }
+        
+            // @return[Array] link objects for all connections in a graph.
+            // For use with d3.svg.diagonal().
+            function connections(data) {
+                if(data) {
+                    __connectionLinks__ = [];
+        
+                    for(key in data) {
+                        if(get(key)) {
+                            getAll(data[key]).forEach(function(item) {
+                                __connectionLinks__.push({
+                                    source: get(key),
+                                    target: item
+                                });
+                            })
+                        }
+                    }
+                }
+        
+                return __connectionLinks__;
+            }
+        
+            // Private
+        
+            // Generate a dictionary graph from an ordered Array represenation.
+            function dictify(items) {
+                var dict = {};
+                items.forEach(function(item, i) {
+                    dict[item.id] = item;
+                })
+        
+                return dict;
+            }
+        
+            function addToDict(items) {
+                var dict = dictify(items);
+                for (key in dict) {
+                    set(key, dict[key]);
+                };
+            }
+        
+            function coerceArray(input) {
+                var result = [];
+                if(Array.isArray(input)) {
+                    result = input;
+                }
+                else if(input) {
+                    result.push(input);
+                }
+                return result;
+            }
+        };
+        NIL.Navigation = function(config) {
+            this.next = next;
+            this.previous = previous;
+            this.navigate = navigate;
+            this.update = update;
+        
+            var current = 0,
+                tableOfContents = new NIL.TableOfContents(config.tocSelector, config.stepToggleSelector)
+            ;
+        
+            config.diagram.on('loaded', function() {
+                config.diagram.courseSteps(function(steps) {
+                    draw();
+        
+                    tableOfContents.updateList(steps)
+                        .on('click', function(d, i) {
+                            d3.event.preventDefault();
+                            navigate(i);
+                            tableOfContents.hide();
+                        })
+        
+                    d3.select("body")
+                        .on("keydown", function(){
+                            if(d3.event.keyCode === 39) // right arrow
+                                next();
+                            else if(d3.event.keyCode === 37) // left arrow
+                                previous();
+                        })
+                })
+            })
+        
+            function update(index, total) {
+                current = index;
+                tableOfContents.updateStep(index, total);
+                tableOfContents.highlight(current);
+                window.location.replace("#" + (current +1));
+            }
+        
+            function next () {
+                navigate(current+1);
+            }
+        
+            function previous() {
+                navigate(current-1);
+            }
+        
+            // Prgramatically navigate to step at index.
+            function navigate(index) {
+                config.diagram.getBounded(index);
+            }
+        
+            // draw the DOM nodes into the DOM.
+            function draw() {
+                var container = document.createElement("div");
+                container.id = config.selector.slice(1);
+        
+                var d3C = d3.select(container);
+                d3C.append('svg')
+                    .attr('class', 'previous')
+                    .on('click', previous)
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('viewBox', '0 0 20 20')
+                    .attr('enable-background', 'new 0 0 20 20')
+                    .append('path')
+                        .attr('transform', 'translate(20,0), scale(-1,1)')
+                        .attr('d', 'M2.679,18.436c0,0.86,0.609,1.212,1.354,0.782l14.612-8.437c0.745-0.43,0.745-1.134,0-1.563L4.033,0.782   c-0.745-0.43-1.354-0.078-1.354,0.782V18.436z');
+        
+                d3C.append('svg')
+                    .attr('class', 'next')
+                    .on('click', next)
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('viewBox', '0 0 20 20')
+                    .attr('enable-background', 'new 0 0 20 20')
+                    .append('path')
+                        .attr('d', 'M2.679,18.436c0,0.86,0.609,1.212,1.354,0.782l14.612-8.437c0.745-0.43,0.745-1.134,0-1.563L4.033,0.782   c-0.745-0.43-1.354-0.078-1.354,0.782V18.436z');
+        
+                var wrap = document.createElement("div");
+                wrap.id = 'prev-next-wrap';
+                wrap.appendChild(container);
+        
+                document.body.appendChild(wrap);
+            }
+        }
+        ;
+        NIL.Style = {
+            duration : 500
+            ,
+            text : function(nodes) {
+                nodes.append("svg:text")
+                        .attr('class', 'text-bg')
+                        .attr("dy", 65)
+                        .attr("text-anchor", function(d) { return d['text-anchor'] || 'middle' })
+                        .text(function(d) { return d.text });
+        
+                nodes.append("svg:text")
+                    .attr("dy", 65)
+                    .attr("text-anchor", function(d) { return d['text-anchor'] || 'middle' })
+                    .text(function(d) { return d.text });
+        
+                return nodes;
+            }
+        
+            ,
+            clicker : function(nodes) {
+                nodes.append('circle')
+                    .attr('class', 'clicker')
+                    .attr('r', 50);
+                return nodes;
+            }
+            ,
+            icon : function(nodes) {
+                nodes.append('circle')
+                    .attr('class', 'icon-bg')
+                    .attr('r', 14)
+        
+                nodes.append('g').append('use')
+                    .attr('xlink:href', function(d) { return (d.iconsUrl + '#' + d.icon) })
+                    .attr('class', function(d) { return "icon " + d.icon })
+                    .attr('height', function(d) {
+                        return d.depth > 0 ? 20 : 30;
+                    })
+                    .attr('width', function(d) {
+                        return d.depth > 0 ? 20 : 30;
+                    })
+        
+                nodes.call(NIL.Style.clicker);
+        
+                return nodes;
+            }
+            ,
+            labels : function(nodes) {
+                nodes.append("svg:text")
+                        .attr('class', 'text-bg')
+                        .attr("dy", 35)
+                        .attr("text-anchor", "middle")
+                        .text(function(d) { return d.name || d.id })
+        
+                nodes.append("svg:text")
+                        .attr("dy", 35)
+                        .attr("text-anchor", "middle")
+                        .text(function(d) { return d.name || d.id });
+        
+                return nodes;
+            }
+        
+            ,
+            focus : function(nodes) {
+                nodes.selectAll("use")
+                    .transition()
+                    .duration(NIL.Style.duration)
+                        .attr('x', -30)
+                        .attr('y', -30)
+                        .attr('height', 60)
+                        .attr('width', 60)
+                    .transition()
+                    .duration(NIL.Style.duration)
+                        .attr('x', -25)
+                        .attr('y', -25)
+                        .attr('height', 50)
+                        .attr('width', 50)
+        
+                nodes.exit().selectAll("use").transition()
+                    .duration(NIL.Style.duration)
+                        .attr('x', -15)
+                        .attr('y', -15)
+                        .attr('height', 30)
+                        .attr('width', 30)
+        
+                nodes.selectAll("circle.software")
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .attr('r', 20)
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .attr('r', 16)
+        
+        
+                nodes.exit().selectAll("circle.software").transition()
+                    .duration(NIL.Style.duration)
+                    .attr('r', 8)
+        
+                nodes.insert('svg:circle', 'g')
+                    .attr('class', 'focus')
+                    .attr('r', 0)
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .attr('r', 60)
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .attr('r', 50)
+        
+        
+                nodes.exit().selectAll("circle.focus").transition()
+                    .duration(NIL.Style.duration)
+                    .attr('r', 0)
+                    .remove()
+        
+                return nodes;
+            }
+        
+            ,
+            crossOut : function(nodes) {
+                var size = 30;
+                var nodesEnter = nodes.append('use')
+                    .attr('xlink:href', function(d) { return (d.iconsUrl + '#cross-out') })
+                    .attr('class', 'cross-out')
+                    .attr('x', -(size/2))
+                    .attr('y', -(size/2))
+                    .attr('height', size)
+                    .attr('width', size)
+        
+                nodes.exit()
+                    .selectAll("use.cross-out").remove();
+        
+                return nodes;
+            }
+        
+            ,
+            disable : function(nodes) {
+                nodes.style('opacity', 0.7)
+        
+                nodes.exit()
+                    .style('opacity', 1);
+        
+                return nodes;
+            }
+        
+            ,
+            pulsePath : function(nodes) {
+                nodes
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .style('stroke-opacity', 1)
+                        .style('stroke-width', 4)
+                    .transition()
+                        .duration(NIL.Style.duration)
+                        .style('stroke-width', 2)
+        
+                return nodes;
+            }
+        
+            ,
+            flowIcon : function(nodes) {
+                nodes.append('use')
+                    .attr('xlink:href', function(d) { return (d.iconsUrl + '#flow-icon') })
+                    .attr('height', 20)
+                    .attr('width', 20)
+                    .attr('x', -10)
+                    .attr('y', -10)
+                    .attr('transform', function(d) {
+                        return 'rotate(' + (d.degree + (d.reverse ? 180 : 0)) + ')';
+                    });
+        
+                return nodes;
+            }
+        }
+        ;
+        NIL.TableOfContents = function(containerSelector, stepToggleSelector) {
+            this.show = show;
+            this.hide = hide;
+            this.highlight = highlight;
+            this.updateStep = updateStep;
+            this.updateList = updateList;
+        
+            var d3StepToggle = d3.select('body').append('div')
+                                    .attr('id', stepToggleSelector.slice(1))
+                                    .on('click', toggle);
+        
+            var container = document.createElement('div');
+            container.id = containerSelector.slice(1);
+        
+            var d3Toc = d3.select(container);
+            d3Toc.append('h4').text('Table of Contents');
+            d3Toc.append('ol');
+        
+            document.body.appendChild(d3Toc.node());
+        
+            function updateStep(index, total) {
+                var current = index + 1;
+                var menu = '<svg viewBox="0 0 90 90" enable-background="new 0 0 90 90" xml:space="preserve">'
+                            + '<path d="M29,34h32c1.1,0,2-0.9,2-2c0-1.1-0.9-2-2-2H29c-1.1,0-2,0.9-2,2C27,33.1,27.9,34,29,34z"/>'
+                            + '<path d="M61,43H29c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2h32c1.1,0,2-0.9,2-2C63,43.9,62.1,43,61,43z"/>'
+                            + '<path d="M61,56H29c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2h32c1.1,0,2-0.9,2-2C63,56.9,62.1,56,61,56z"/>'
+                            + '</svg>'
+                            ;
+        
+                var count = '<em>'+ current + '</em> of ' + total + menu;
+                d3StepToggle.html(count);
+        
+                d3.select('#signup-form').classed('active', current === total);
+            }
+        
+            // update the table of contents list.
+            function updateList(steps, index) {
+                var self = this;
+                current = index || 0;
+        
+                steps.forEach(function(d, i) {
+                    d.active = (i === index);
+                })
+        
+                var nodes = d3Toc.select('ol').selectAll('li')
+                            .data(steps)
+                            .classed('active', function(d) { return d.active })
+        
+                nodes.exit().remove();
+        
+                return nodes.enter()
+                    .append('li')
+                        .classed('active', function(d) { return d.active })
+                    .append('a')
+                        .html(function(d) { return d.title })
+            }
+        
+            function toggle() {
+                d3Toc.classed('active', !d3Toc.classed('active'));
+            }
+        
+            function show() {
+                d3Toc.classed('active', true);
+            }
+        
+            function hide() {
+                d3Toc.classed('active', false);
+            }
+        
+            function highlight(index) {
+                d3Toc.select('ol').selectAll('li')
+                    .classed('active', false)
+                    .filter(':nth-child('+ (index+1) +')').classed('active', true);
+            }
+        }
+        ;
+        // This is a manifest file that'll be compiled into application.js, which will include all the files
+        // listed below.
+        //
+        // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+        // or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+        //
+        // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+        // the compiled file.
+        //
+        // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+        // GO AFTER THE REQUIRES BELOW.
+        //
+        
+        ;
+        
+            </script>
+    </head>
+  <body class='visualizer'>
+
+
+    <script>
+      NIL.course({"contentUrl":
+      {
+    "steps" : [
+        {
+            "title" : "Một trang web (Website) hoạt động như thế nào?",
+            "diagramState" : "start",
+            "focus" : "You"
+        }
+        ,
+        {
+            "title" : "Các trang web được xem bằng cách sử dụng một chương trình phần mềm được gọi là trình duyệt web.",
+            "diagramState" : "web-browser",
+            "focus" : "Web Browser",
+            "focusPath" : ["You", "Web Browser"]
+        }
+
+        ,
+        {
+            "title" : "Phần mềm duyệt web chạy trên máy tính xách tay hoặc điện thoại thông minh của bạn giống như phần mềm Excel hoặc Photoshop.",
+            "diagramState" : "web-browser-platforms",
+            "focus" : ["Laptop", "Phone", "Tablet"]
+        }
+
+        ,
+        {
+            "title" : "Trình duyệt web tải xuống nội dung qua mạng Internet.",
+            "diagramState" : "internet",
+            "focus" : "Internet",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "HTML"],
+                ["Internet", "Image"],
+                ["Internet", "Video"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Trình duyệt web có thể tải xuống và truyền trực tuyến các tệp như văn bản, hình ảnh, pdf, phim và nhạc.",
+            "diagramState" : "internet",
+            "focus" : ["HTML", "Image", "Video"]
+        }
+
+        ,
+        {
+            "title" : "Các tệp này được lưu trữ trên các máy tính đặt ở 1 nơi khác được gọi là máy chủ (Server).",
+            "diagramState" : "server",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ cũng là máy tính. Nó chứa các tệp trong hệ thống quản lý tệp của nó giống như các tệp và thư mục trên máy tính cá nhân của bạn.",
+            "diagramState" : "server",
+            "focus" : "Filesystem"
+        }
+
+        ,
+        {
+            "title" : "Về mặt kỹ thuật, toàn bộ mạng máy tính này là Internet. Biểu tượng Internet chỉ minh họa các kết nối trong mạng.",
+            "diagramState" : "server",
+            "focus" : ["Phone", "Laptop", "Tablet", "Internet", "Server"]
+        }
+
+
+        ,
+        {
+            "title" : "Máy chủ chấp nhận yêu cầu Internet được gọi là Máy chủ Web (Web Servers).",
+            "diagramState" : "server",
+            "focus" : "Server",
+            "focusPath" : ["You", "Laptop", "Internet", "Server"]
+        }
+
+        ,
+        {
+            "title" : "Để chấp nhận các yêu cầu Internet, máy chủ chạy một chương trình phần mềm được gọi là web-server.",
+            "diagramState" : "static-server",
+            "focus" : "Web Server"
+        }
+
+        ,
+        {
+            "title" : "Phần mềm máy chủ web quyết định các tệp và chương trình nào là được phép truy cập từ Internet.",
+            "diagramState" : "static-server",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+                ["Filesystem", "HTML"],
+                ["Filesystem", "Image"]
+            ],
+            "disable" : ["Video"]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ cũng có thể chứa tệp riêng tư không được phép truy cập từ trên web ...",
+            "diagramState" : "security-gate",
+            "focus" : ["Passwords", "Secrets"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Do đó, các yêu cầu tải trang web (web requests) được xử lý bởi máy chủ web, hoạt động như một loại cổng bảo mật.",
+            "diagramState" : "security-gate",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server"],
+                ["Anna", "Phone", "Internet", "Server", "Web Server"]
+            ],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Tất cả các trang web chỉ là văn bản. Ngay cả phương tiện truyền thông như hình ảnh và video được mã hóa và được gửi dưới dạng tệp dựa trên văn bản.",
+            "diagramState" : "security-gate",
+            "focus" : ["HTML", "Video", "Image"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Khi có yêu cầu đến, máy chủ xử lý yêu cầu và gửi lại văn bản mô tả trang web mà bạn thấy.",
+            "diagramState" : "security-gate",
+            "focusPaths" : [
+                ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+                ["Filesystem", "HTML"],
+                ["Filesystem", "Image"],
+                ["Filesystem", "Video"]
+            ],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Cách đơn giản nhất để gửi nội dung này tới người dùng là dành cho máy chủ web để truy xuất nó từ hệ thống tệp riêng của mình.",
+            "diagramState" : "security-gate",
+            "focus" : ["Filesystem"],
+            "focusPath" : ["You", "Laptop", "Internet", "Server", "Web Server", "Filesystem"],
+            "disable" : ["Passwords", "Secrets"]
+        }
+
+        ,
+        {
+            "title" : "Điều đó có nghĩa là trang Amazon.com có hàng triệu trang sản phẩm được lưu trữ dưới dạng tệp?",
+            "diagramState" : "static-server-amazon",
+            "focus" : ["product-1","product-2","product-3","product-4"]
+        }
+
+        ,
+        {
+            "title" : "Tạo hàng triệu tệp trang sản phẩm sẽ tốn rất nhiều thời gian và rất khó bảo trì.",
+            "diagramState" : "millions-pages"
+        }
+
+        ,
+        {
+            "title" : "Việc cập nhật bố cục trang sản phẩm sẽ dẫn đến phải chỉnh sửa từng tệp đơn ư?!",
+            "diagramState" : "millions-pages",
+            "focus" : ["product-1","product-2","product-3","product-4", "product-5","product-6","product-7","product-8", "product-9","product-10","product-11","product-12"]
+        }
+
+        ,
+        {
+            "title" : "Không, chúng ta sẽ có một Ứng dụng web là chương trình phần mềm có thể tạo trang theo yêu cầu.",
+            "diagramState" : "web-application",
+            "focus" : ["Application"]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ web được định cấu hình để định tuyến các yêu cầu đến ứng dụng web thay vì cung cấp tệp trực tiếp.",
+            "diagramState" : "web-application",
+            "focus" : ["Web Server"],
+            "focusPath" : ["Web Server", "Application"]
+        }
+
+        ,
+        {
+            "title" : "Các ứng dụng web có thể đọc từ một tệp mẫu và xây dựng một trang html động.",
+            "diagramState" : "templates",
+            "focus" : ["Templates"],
+            "focusPath" : ["Application", "Templates"]
+        }
+
+        ,
+        {
+            "title" : "Điều này có nghĩa là các trang web không thực sự tồn tại, một ứng dụng chỉ tạo ra chúng khi có người cần hiển thị.",
+            "diagramState" : "templates",
+            "focus" : ["Application"]
+        }
+
+
+        ,
+        {
+            "title" : "Một ứng dụng web có thể tương tác với một cơ sở dữ liệu.",
+            "diagramState" : "database",
+            "focus" : "Database",
+            "focusPath" : ["Application", "Templates", "Database"]
+        }
+
+        ,
+        {
+            "title" : "Cơ sở dữ liệu là một chương trình phần mềm được cài đặt trên máy chủ giúp lưu trữ và truy cập dữ liệu hiệu quả.",
+            "diagramState" : "database",
+            "focus" : "Database"
+        }
+
+        ,
+        {
+            "title" : "Chúng ta có thể sử dụng cơ sở dữ liệu để lưu trữ hàng triệu sản phẩm của Amazon dưới dạng dữ liệu: mô tả, giá, kích thước, hình ảnh.",
+            "diagramState" : "database-data",
+            "focus" : ["Product 1", "Product 2", "Product 3", "Product 4"],
+            "focusPaths" : [
+                ["Database", "Product 1"],
+                ["Database", "Product 2"],
+                ["Database", "Product 3"],
+                ["Database", "Product 4"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Ứng dụng web sẽ truy vấn (đọc) cơ sở dữ liệu và điền các mẫu html để tạo ra trang sản phẩm động.",
+            "diagramState" : "database-data",
+            "focus" : "Templates",
+            "focusPath" : ["Application", "Templates", "Database", "Product 1"]
+        }
+
+        ,
+        {
+            "title" : "Dữ liệu sản phẩm được sử dụng để điền một mẫu trang có các giá trị gắn động dạng như {price}, {description}, v.v.",
+            "diagramState" : "database-data",
+            "focus" : "Templates"
+        }
+
+        ,
+        {
+            "title" : "Bây giờ nếu bạn muốn thay đổi giao diện trang xem sản phẩm, bạn chỉ phải thay đổi một tệp duy nhất. :D Quá sướng",
+            "diagramState" : "database-data",
+            "focus" : "Templates"
+        }
+
+        ,
+        {
+            "title" : "Các chương trình phần mềm của chúng ta chạy trên một máy chủ vật lý (1 máy tính). Mỗi máy chủ có giới hạn vật lý về số lượng yêu cầu hiển thị html mà nó có thể xử lý.",
+            "diagramState" : "database-data",
+            "focus" : ["Server", "Web Server", "Database", "Application"]
+        }
+
+        ,
+        {
+            "title" : "Để xử lý nhiều yêu cầu hơn, hoặc mở rộng ứng dụng của bạn, bạn có thể di chuyển phần mềm cơ sở dữ liệu của bạn đến máy chủ cơ sở dữ liệu riêng của mình.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Database Server"
+        }
+
+
+        ,
+        {
+            "title" : "Giờ đây, máy chủ ứng dụng của bạn có thể tập trung vào việc phân phối các yêu cầu duyệt web,",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Trong khi máy chủ cơ sở dữ liệu của bạn nhận được nhiều sức mạnh tính toán hơn để quản lý cơ sở dữ liệu.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Database Server"
+        }
+
+        ,
+        {
+            "title" : "Một máy chủ duy nhất có thể là một nút thắt cổ chai.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ ứng dụng không còn xử lý tải cơ sở dữ liệu nữa, nhưng nó vẫn chịu trách nhiệm cho tất cả các requests.",
+            "diagramState" : "dedicated-database",
+            "focus" : "Server",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Chúng ta có thể giúp cái máy chủ chạy chậm này bằng cách thêm nhiều bạn của nó vào để san sẻ cân bằng tải.",
+            "diagramState" : "multi-app-architecture",
+            "focus" : ["Server", "Server (clone 1)", "Server (clone 2)"]
+        }
+
+        ,
+        {
+            "title" : "Nhiều máy chủ ứng dụng sẽ phân bổ các yêu cầu tải trang web (cân bằng tải).",
+            "diagramState" : "multi-app-architecture",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server (clone 2)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Làm thế nào để chúng ta gửi yêu cầu đến các máy chủ mới vừa thêm vào?",
+            "diagramState" : "multi-app-architecture",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Server (clone 2)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Máy chủ proxy ngược ủy quyền các yêu cầu trên nhiều máy chủ ứng dụng.",
+            "diagramState" : "reverse-proxy",
+            "focus" : "Reverse Proxy"
+        }
+
+        ,
+        {
+            "title" : "Proxy ngược được chèn trước máy chủ ứng dụng của chúng tôi để yêu cầu chuyển trực tiếp đến proxy ngược.",
+            "diagramState" : "reverse-proxy",
+            "focus" : "Reverse Proxy",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Proxy ngược chạy chương trình phần mềm máy chủ web của riêng nó.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : "reverse-proxy-web-server"
+        }
+
+        ,
+        {
+            "title" : "Máy chủ web trên máy chủ proxy ngược được định cấu hình để định tuyến các yêu cầu đến các máy chủ khác.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focusPaths" : [
+                ["reverse-proxy-web-server", "Server"],
+                ["reverse-proxy-web-server", "Server (clone 1)"],
+                ["reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Sử dụng nhiều máy chủ ứng dụng nhỏ được gọi là mở rộng theo chiều ngang.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Server", "Server (clone 1)", "Server (clone 2)"],
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Chia tỷ lệ theo chiều ngang thường là chi phí hiệu quả - nó rẻ hơn việc mua nhiều máy chủ đơn lẻ nhưng mạnh.",
+            "diagramState" : "reverse-proxy-web-server"
+        }
+
+
+        ,
+        {
+            "title" : "Mở rộng theo chiều ngang giúp giảm bớt rủi ro.",
+            "diagramState" : "reverse-proxy-web-server",
+            "crossOut" : ["Server"],
+            "disable" : ["Web Server", "Application", "Templates", "Filesystem"]
+        }
+
+        ,
+        {
+            "title" : "Nhiều máy chủ có nghĩa là một số máy chủ có thể bị lỗi và các máy chủ khác sẽ nhận tải.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focusPaths" : [
+                ["Anna", "Phone Web Browser", "Phone", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["You", "Web Browser", "Laptop", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 1)"],
+                ["Pinky", "Tablet Web Browser", "Tablet", "Internet", "Reverse Proxy", "reverse-proxy-web-server", "Server (clone 2)"]
+            ]
+            ,
+            "crossOut" : ["Server"],
+            "disable" : ["Web Server", "Application", "Templates", "Filesystem"]
+        }
+
+        ,
+        {
+            "title" : "Một máy chủ cơ sở dữ liệu tập trung duy trì tính toàn vẹn dữ liệu trên các máy chủ ứng dụng.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Database Server"],
+            "focusPaths" : [
+                ["Application", "Database Server"],
+                ["App clone 1", "Database Server"],
+                ["App clone 2", "Database Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Điều này giải quyết trường hợp yêu cầu của người dùng sẽ được xử lý bởi app1 trước, sau đó yêu cầu khác của cùng một người dùng được xử lý bởi app2.",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["Database Server"],
+            "focusPaths" : [
+                ["Server", "Web Server", "Application", "Database Server"],
+                ["Server (clone 1)", "Web Server clone 1", "App clone 1", "Database Server"],
+                ["Server (clone 2)", "Web Server clone 2", "App clone 2", "Database Server"]
+            ]
+        }
+
+        ,
+        {
+            "title" : "Như vậy là bạn đã hiểu hết về cơ chế hoạt động theo mô hình Client-Server của các máy chủ và các trang web rồi đó. Các bạn hãy tìm thêm tài liệu để đọc thêm nhé ^^!",
+            "diagramState" : "reverse-proxy-web-server",
+            "focus" : ["You"]
+        }
+    ]
+}
+
+      ,"diagramUrl":
+      {
+    "states": [
+        {
+            "diagramState" : "start",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "icon" : "user-2",
+                            "id" : "You"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "You" : [600, 200]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "web-browser",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Web Browser",
+                            "icon" : "web-browser",
+                            "from" : "You"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Web Browser" : [700, 200]
+            }
+            ,
+            "connections" : {
+                "You" : "Web Browser"
+            }
+        }
+
+
+        ,
+        {
+            "diagramState" : "web-browser-platforms",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "icon" : "girl",
+                            "id" : "Anna",
+                            "from" : "You"
+                        }
+                        ,
+                        {
+                            "id" : "Pinky",
+                            "icon" : "cat",
+                            "from" : "You"
+                        }
+                        ,
+                        {
+                            "icon": "tablet",
+                            "id" : "Tablet",
+                            "from" : "You"
+                        }
+
+                        ,
+                        {
+                            "icon": "laptop",
+                            "id" : "Laptop",
+                            "from" : "You"
+                        }
+                        ,
+
+                        {
+                            "icon" : "iphone",
+                            "id" : "Phone",
+                            "from" : "You"
+                        }
+
+                        ,
+                        {
+                            "id" : "Phone Web Browser",
+                            "name" : "Web Browser",
+                            "icon" : "web-browser",
+                            "from" : "You"
+                        }
+                        ,
+                        {
+                            "id" : "Tablet Web Browser",
+                            "name" : "Web Browser",
+                            "icon" : "web-browser",
+                            "from" : "You"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "You" : [100, 200],
+                "Web Browser" : [200, 200],
+
+                "Anna" : [100, 50],
+                "Pinky" : [100, 350],
+                "Tablet" : [300, 350],
+                "Laptop" : [300, 200],
+                "Phone" : [300, 50],
+
+                "Phone Web Browser" : [200, 50],
+                "Tablet Web Browser" : [200, 350]
+            }
+            ,
+            "connections" : {
+                "Anna" : "Phone Web Browser",
+                "Phone Web Browser" : "Phone",
+                "Pinky" : "Tablet Web Browser",
+                "Tablet Web Browser" : "Tablet",
+                "Web Browser" : "Laptop"
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "internet",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Internet",
+                            "icon": "wifi-high",
+                            "from" : "Laptop"
+                        }
+                        ,
+                        {
+                            "id" : "HTML",
+                            "icon" : "document-html",
+                            "from" : "Internet"
+                        }
+                        ,
+                        {
+                            "id" : "Image",
+                            "icon" : "image",
+                            "from" : "Internet"
+                        }
+                        ,
+                        {
+                            "id" : "Video",
+                            "icon" : "video-2",
+                            "from" : "Internet"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Internet" : [400, 200],
+                "HTML" : [500, 50],
+                "Image" : [600, 200],
+                "Video" : [500, 350]
+            }
+            ,
+            "connections" : {
+                "Internet" : ["Phone", "Laptop", "Tablet", "HTML", "Image", "Video"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "server",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Server",
+                            "icon": "server2",
+                            "from" : "Internet"
+                        }
+                        ,
+                        {
+                            "id" : "Filesystem",
+                            "icon": "filesystem",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "HTML" : [700, 150],
+                "Image" : [700, 250],
+                "Video" : [700, 350],
+
+                "Server" : [500, 200],
+                "Filesystem" : [600, 250]
+            }
+            ,
+            "connections" : {
+                "Internet" : ["Phone", "Laptop", "Tablet"],
+                "Server" : ["Internet", "Filesystem"],
+                "Filesystem" : ["HTML", "Image", "Video"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "static-server",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Web Server",
+                            "icon": "software",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Web Server" : [550, 250],
+                "Filesystem" : [650, 250],
+                "HTML" : [750, 150],
+                "Image" : [750, 250],
+                "Video" : [750, 350]
+            }
+            ,
+            "connections" : {
+                "Server" : ["Internet", "Web Server"],
+                "Web Server" : "Filesystem"
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "security-gate",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "icon": "document",
+                            "id" : "Passwords",
+                            "from" : "Filesystem"
+                        }
+                        ,
+                        {
+                            "icon": "document",
+                            "id" : "Secrets",
+                            "from" : "Filesystem"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Passwords" : [850, 200],
+                "Secrets" : [850, 300]
+            }
+            ,
+            "connections" : {
+                "Passwords" : "Filesystem",
+                "Secrets" : "Filesystem"
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "static-server-amazon",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "product-1",
+                            "name" : "Product 1",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-2",
+                            "name" : "Product 2",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-3",
+                            "name" : "Product 3",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-4",
+                            "name" : "Product 4",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                    ]
+                }
+                ,
+                {
+                    "method" : "remove",
+                    "items" : [
+                        {
+                            "id" : "HTML"
+                        }
+                        ,
+                        {
+                            "id" : "Video"
+                        }
+                        ,
+                        {
+                            "id" : "Image"
+                        }
+                        ,
+                        {
+                            "id" : "Passwords"
+                        }
+                        ,
+                        {
+                            "id" : "Secrets"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "product-1" : [750, 50],
+                "product-2" : [750, 175],
+                "product-3" : [750, 300],
+                "product-4" : [750, 425]
+            }
+            ,
+            "connections" : {
+                "Filesystem" : ["product-1", "product-2", "product-3", "product-4"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "millions-pages",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "product-5",
+                            "name" : "Product 5",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-6",
+                            "name" : "Product 6",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-7",
+                            "name" : "Product 7",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-8",
+                            "name" : "Product 8",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-9",
+                            "name" : "Product 9",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-10",
+                            "name" : "Product 10",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-11",
+                            "name" : "Product 11",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                        ,
+                        {
+                            "id" : "product-12",
+                            "name" : "Product 12",
+                            "from" : "Filesystem",
+                            "icon" : "document-html"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "product-5" : [850, 50],
+                "product-6" : [850, 175],
+                "product-7" : [850, 300],
+                "product-8" : [850, 425],
+                "product-9" : [950, 50],
+                "product-10" : [950, 175],
+                "product-11" : [950, 300],
+                "product-12" : [950, 425]
+            }
+            ,
+            "connections" : {
+                "Filesystem" : [
+                    "product-1",
+                    "product-2",
+                    "product-3",
+                    "product-4",
+                    "product-5",
+                    "product-6",
+                    "product-7",
+                    "product-8",
+                    "product-9",
+                    "product-10",
+                    "product-11",
+                    "product-12"
+                ]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "web-application",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Application",
+                            "icon": "software",
+                            "from" : "Web Server"
+                        }
+                    ]
+                }
+                ,
+                {
+                    "method" : "remove",
+                    "items" : [
+                        {
+                            "id" : "product-1"
+                        }
+                        ,
+                        {
+                            "id" : "product-2"
+                        }
+                        ,
+                        {
+                            "id" : "product-3"
+                        }
+                        ,
+                        {
+                            "id" : "product-4"
+                        }
+                        ,
+                        {
+                            "id" : "product-5"
+                        }
+                        ,
+                        {
+                            "id" : "product-6"
+                        }
+                        ,
+                        {
+                            "id" : "product-7"
+                        }
+                        ,
+                        {
+                            "id" : "product-8"
+                        }
+                        ,
+                        {
+                            "id" : "product-9"
+                        }
+                        ,
+                        {
+                            "id" : "product-10"
+                        }
+                        ,
+                        {
+                            "id" : "product-11"
+                        }
+                        ,
+                        {
+                            "id" : "product-12"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "product-1" : [950, 50],
+                "product-2" : [950, 150],
+                "product-3" : [950, 250],
+                "product-4" : [950, 350],
+
+                "Filesystem" : [750, 250],
+                "Application" : [650, 250]
+            }
+            ,
+            "connections" : {
+                "Application" : ["Web Server"],
+                "Web Server" : []
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "templates",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Templates",
+                            "icon": "documents-code",
+                            "from" : "Application"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Filesystem" : [850, 250],
+                "Templates" : [750, 250]
+            }
+            ,
+            "connections" : {
+                "Application" : ["Web Server", "Templates"],
+                "Templates" : "Filesystem"
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "database",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Database",
+                            "icon": "software",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Filesystem" : [800, 350],
+
+                "Database" : [750, 100]
+            }
+            ,
+            "connections" : {
+                "Database" : ["Templates"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "database-data",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Product 1",
+                            "icon" : "document",
+                            "from" : "Database"
+                        }
+                        ,
+                        {
+                            "id" : "Product 2",
+                            "icon" : "document",
+                            "from" : "Database"
+                        }
+                        ,
+                        {
+                            "id" : "Product 3",
+                            "icon" : "document",
+                            "from" : "Database"
+                        }
+                        ,
+                        {
+                            "id" : "Product 4",
+                            "icon" : "document",
+                            "from" : "Database"
+                        }
+
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Product 1" : [900, 50],
+                "Product 2" : [900, 150],
+                "Product 3" : [900, 250],
+                "Product 4" : [900, 350]
+            }
+            ,
+            "connections" : {
+                "Database" : ["Templates", "Product 1", "Product 2","Product 3","Product 4","Product data 5"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "dedicated-database",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Database Server",
+                            "icon": "database",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+                ,
+                {
+                    "method" : "remove",
+                    "items" : [
+                        {
+                            "id": "Database"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Database Server" : [750, 50]
+            }
+            ,
+            "connections" : {
+                "Database Server" : ["Templates", "Product 1", "Product 2","Product 3","Product 4","Product data 5"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "multi-app-architecture",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Server (clone 1)",
+                            "icon": "server2",
+                            "from" : "Server"
+                        }
+                        ,
+                        {
+                            "id" : "Web Server clone 1",
+                            "icon": "software",
+                            "from" : "Server"
+                        }
+                        ,
+                        {
+                            "id" : "App clone 1",
+                            "icon": "software",
+                            "from" : "Server"
+                        }
+                        ,
+                        {
+                            "id" : "templates-clone-1",
+                            "icon": "documents-code",
+                            "name" : "Templates",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+
+                ,
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Server (clone 2)",
+                            "icon": "server2",
+                            "from" : "Server"
+                        }
+                        ,
+                        {
+                            "id" : "Web Server clone 2",
+                            "icon": "software",
+                            "from" : "Server"
+                        }
+                        ,
+                        {
+                            "id" : "App clone 2",
+                            "icon": "software",
+                            "from" : "Server",
+                            "connect" : "Database Server"
+                        }
+                        ,
+                        {
+                            "id" : "templates-clone-2",
+                            "icon": "documents-code",
+                            "name" : "Templates",
+                            "from" : "Server"
+                        }
+                    ]
+                }
+
+            ]
+            ,
+            "positions" : {
+                "Server (clone 1)" : [500, 50],
+                "Web Server clone 1" : [550, 100],
+                "App clone 1" : [700, 100],
+                "templates-clone-1" : [800, 100],
+
+                "Server (clone 2)" : [500, 350],
+                "Web Server clone 2" : [550, 400],
+                "App clone 2" : [700, 400],
+                "templates-clone-2" : [800, 400],
+
+                "Product 1" : [1100, 50],
+                "Product 2" : [1100, 150],
+                "Product 3" : [1100, 250],
+                "Product 4" : [1100, 350],
+
+                "Database Server" : [950, 50],
+
+                "Filesystem" : [950, 250],
+                "Application" : [700, 250],
+                "Templates" : [800, 250]
+            }
+            ,
+            "connections" : {
+                "Web Server clone 1" : ["Server (clone 1)", "App clone 1"],
+                "Web Server clone 2" : ["Server (clone 2)", "App clone 2"],
+                "templates-clone-1" : ["App clone 1", "Database Server"],
+                "templates-clone-2" : ["App clone 2", "Database Server"]
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "reverse-proxy",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "Reverse Proxy",
+                            "icon": "server2",
+                            "from" : "Internet"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "Reverse Proxy" : [475, 200],
+
+                "Server" : [625, 200],
+
+
+
+                "Server (clone 1)" : [625, 50],
+                "Web Server clone 1" : [675, 100],
+                "App clone 1" : [775, 100],
+                "templates-clone-1" : [875, 100],
+
+                "Server (clone 2)" : [625, 350],
+                "Web Server clone 2" : [675, 400],
+                "App clone 2" : [775, 400],
+                "templates-clone-2" : [875, 400],
+
+                "Web Server" : [675, 250],
+                "Application" : [775, 250],
+                "Templates" : [875, 250],
+                "Filesystem" : [975, 250]
+            }
+            ,
+            "connections" : {
+                "Server" : ["Web Server"],
+                "Reverse Proxy" : "Internet"
+            }
+        }
+
+        ,
+        {
+            "diagramState" : "reverse-proxy-web-server",
+            "actions" : [
+                {
+                    "method" : "add",
+                    "items" : [
+                        {
+                            "id" : "reverse-proxy-web-server",
+                            "icon" : "software",
+                            "name" : "Web Server",
+                            "from" : "Reverse Proxy"
+                        }
+                    ]
+                }
+            ]
+            ,
+            "positions" : {
+                "reverse-proxy-web-server" : [550, 250]
+            }
+            ,
+            "connections" : {
+                "reverse-proxy-web-server" : ["Reverse Proxy", "Server", "Server (clone 1)", "Server (clone 2)"]
+            }
+        }
+    ]
+}
+
+      ,"iconsUrl":"/icons.svg","name":"Một Website hoạt động như thế nào"});
+    </script>
+  </body>
+</html>
