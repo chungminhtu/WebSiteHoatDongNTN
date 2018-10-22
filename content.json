@@ -109,7 +109,7 @@
 
         ,
         {
-            "title" : "Tất cả các trang web chỉ là văn bản. Ngay cả các tệp đa phương tiện như ảnh và video đều được mã hóa và được gửi đi dạng file văn bản.",
+            "title" : "Tất cả các trang web chỉ là văn bản. Ngay cả các file đa phương tiện như ảnh và video đều được mã hóa và được gửi đi dạng file văn bản.",
             "diagramState" : "security-gate",
             "focus" : ["HTML", "Video", "Image"],
             "disable" : ["Passwords", "Secrets"]
