@@ -1,0 +1,1770 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 15">
+<link rel=File-List href="C%23Version_WithExample_files/filelist.xml">
+<style id="C#Version_WithExample_26921_Styles">
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+.xl6526921
+	{color:#0563C1;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl6626921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:13.5pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl6726921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl6826921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl6926921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7026921
+	{color:#0563C1;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7126921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl7226921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid black;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl7326921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid black;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl7426921
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7526921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl7626921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7726921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid black;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7826921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid black;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl7926921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl8026921
+	{color:#414141;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Verdana, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8126921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8226921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8326921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8426921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8526921
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl8626921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl8726921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl8826921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl8926921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl9026921
+	{color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;
+	padding-left:18px;
+	mso-char-indent-count:2;}
+.xl9126921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl9226921
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:#212529;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Tahoma, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+-->
+</style>
+</head>
+
+<body>
+<!--[if !excel]>&nbsp;&nbsp;<![endif]-->
+<!--The following information was generated by Microsoft Excel's Publish as Web
+Page wizard.-->
+<!--If the same item is republished from Excel, all information between the DIV
+tags will be replaced.-->
+<!----------------------------->
+<!--START OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD -->
+<!----------------------------->
+
+<div id="C#Version_WithExample_26921" align=center x:publishsource="Excel">
+
+<table border=0 cellpadding=0 cellspacing=0 width=2209 class=xl6726921
+ style='border-collapse:collapse;table-layout:fixed;width:1658pt'>
+ <col class=xl6726921 width=64 style='width:48pt'>
+ <col class=xl6726921 width=63 style='mso-width-source:userset;mso-width-alt:
+ 2304;width:47pt'>
+ <col class=xl7426921 width=177 style='mso-width-source:userset;mso-width-alt:
+ 6473;width:133pt'>
+ <col class=xl7426921 width=290 style='mso-width-source:userset;mso-width-alt:
+ 10605;width:218pt'>
+ <col class=xl7426921 width=325 style='mso-width-source:userset;mso-width-alt:
+ 11885;width:244pt'>
+ <col class=xl7426921 width=653 style='mso-width-source:userset;mso-width-alt:
+ 23881;width:490pt'>
+ <col class=xl7526921 width=363 style='mso-width-source:userset;mso-width-alt:
+ 13275;width:272pt'>
+ <col class=xl6726921 width=274 style='mso-width-source:userset;mso-width-alt:
+ 10020;width:206pt'>
+ <tr height=23 style='height:17.25pt'>
+  <td height=23 class=xl6726921 width=64 style='height:17.25pt;width:48pt'></td>
+  <td class=xl6626921 width=63 style='width:47pt'>Các phiên b&#7843;n C# và các
+  tính n&#259;ng (features) theo t&#7915;ng phiên b&#7843;n</td>
+  <td class=xl6626921 width=177 style='width:133pt'></td>
+  <td class=xl6626921 width=290 style='width:218pt'></td>
+  <td class=xl6626921 width=325 style='width:244pt'></td>
+  <td class=xl6626921 width=653 style='width:490pt'></td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl6626921 width=274 style='width:206pt'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=xl6726921 style='height:15.0pt'></td>
+  <td class=xl6826921 colspan=5 align=left>* Các phiên b&#7843;n .Net
+  &#273;&#7901;i sau s&#7869; k&#7871; th&#7915;a các tính n&#259;ng c&#7911;a
+  &#273;&#7901;i tr&#432;&#7899;c (ví d&#7909; .Net 4.6 s&#7869; ch&#7913;a các
+  cú pháp c&#7911;a .Net 4.5 tr&#7903; v&#7873; tr&#432;&#7899;c)</td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl9226921></td>
+ </tr>
+ <tr height=40 style='height:30.0pt'>
+  <td height=40 class=xl6726921 style='height:30.0pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C#<span
+  style='mso-spacerun:yes'>  </span>Version</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio Version</td>
+  <td class=xl6926921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework Version and Date Release</td>
+  <td class=xl6926921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Core Features (Click link to read MS document)</td>
+  <td class=xl6926921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>Syntax (ví d&#7909; cách vi&#7871;t cú pháp)</td>
+  <td class=xl8826921 width=363 style='border-left:none;width:272pt'>Gi&#7843;i
+  thích</td>
+  <td class=xl8826921 width=274 style='border-left:none;width:206pt'>Live
+  Examples (Ch&#7841;y th&#7917;)</td>
+ </tr>
+ <tr height=40 style='height:30.0pt'>
+  <td height=40 class=xl6726921 style='height:30.0pt'></td>
+  <td class=xl7926921 width=63 style='width:47pt'>C# 1.0</td>
+  <td class=xl8026921 width=177 style='width:133pt'>Visual Studio .NET 2002</td>
+  <td class=xl8126921 width=290 style='width:218pt;box-sizing: border-box;
+  padding:0.5rem'>.NET Framework 1.0 (2002-02-13)<br>
+    .NET Framework 1.1 (2003-04-24)</td>
+  <td class=xl7026921 width=325 style='width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/standard/managed-code"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Managed code</span></a></td>
+  <td class=xl8526921 width=653 style='border-left:none;width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=190 style='height:142.5pt'>
+  <td height=190 class=xl6726921 style='height:142.5pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C# 2.0</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>Visual
+  Studio 2005</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework 2.0 (2005-11-07)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Generics<span
+  style='mso-spacerun:yes'> </span></span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>class MyGenClass&lt;T&gt; where T: struct<br>
+    {<br>
+    <span style='mso-spacerun:yes'>    </span>public void Method(T t)<br>
+    <span style='mso-spacerun:yes'>    </span>{<br>
+    <span style='mso-spacerun:yes'>        </span>if (t == null)<br>
+    <span style='mso-spacerun:yes'>           
+  </span>Console.WriteLine(&quot;null&quot;);<br>
+    <span style='mso-spacerun:yes'>    </span>}<br>
+    }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Vi&#7871;t class nh&#432;ng không &#273;&#7883;nh ngh&#297;a
+  ki&#7875;u cho class và không &#273;&#7883;nh ngh&#297;a ki&#7875;u cho các
+  thu&#7897;c tính c&#7911;a class &#273;ó.<br>
+    <br>
+    Cái này r&#7845;t phù h&#7907;p &#273;&#7875; làm vi&#7879;c v&#7899;i 1
+  d&#7919; li&#7879;u &#273;&#7897;ng ví d&#7909; các hàm thêm s&#7917;a xóa có
+  th&#7875; vi&#7871;t chung 1 l&#7847;n &#7903; m&#7897;t class generics. Sau
+  &#273;ó &#7903; m&#7895;i b&#7843;ng ta ch&#7881; vi&#7879;c truy&#7873;n
+  lo&#7841;i class b&#7843;ng t&#432;&#417;ng &#7913;ng là &#273;ã có s&#7861;n
+  các hàm thêm s&#7917;a xóa cho b&#7843;ng &#273;ó mà k c&#7847;n vi&#7871;t
+  l&#7841;i cho t&#7915;ng b&#7843;ng.<span style='mso-spacerun:yes'> </span></td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/MZJ5HY">https://dotnetfiddle.net/MZJ5HY</a></td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-methods"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Anonymous methods</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>TestDelegate testDelB = delegate(string s) {
+  Console.WriteLine(s); };<br>
+    <br>
+    Sang &#273;&#7871;n phiên b&#7843;n 3.0 thì có th&#7875; dùng Lambda
+  &#273;&#7875; vi&#7871;t thành<br>
+    Del d = () =&gt; Console.WriteLine(&quot;Yep, its true.&quot;);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Khai báo m&#7897;t hàm ngay trong 1 dòng l&#7879;nh. Có
+  th&#7875; truy&#7873;n giá tr&#7883; tr&#7843; v&#7873; c&#7911;a hàm cho
+  m&#7897;t bi&#7871;n.</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/UhL3ua</td>
+ </tr>
+ <tr height=57 style='height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/nullable-types/index"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Nullable types</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>int? i = null; <br>
+    object o = i;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cho phép khai báo m&#7897;t bi&#7871;n int, bool, decimal…
+  nh&#432;ng l&#432;u &#273;&#432;&#7907;c giá tr&#7883; null và không báo
+  l&#7895;i khi gán null cho nó</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/phkBNV</td>
+ </tr>
+ <tr height=57 style='height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C# 3.0</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2008</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework 3.0 (2006-11-06)<br>
+    .NET Framework 3.5 (2007-11-19)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Lambda expressions</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>listOfFoo.Where(x =&gt; x.Size &gt; 10);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Thay vi&#7879;c vi&#7871;t 1 hàm b&#7857;ng function, ta có
+  th&#7875; dùng toán t&#7917; =&gt; (Lambda). Code s&#7869; vi&#7871;t
+  r&#7845;t ng&#7855;n g&#7885;n nh&#7901; bi&#7875;u th&#7913;c Lambda này.</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/fobWzB</td>
+ </tr>
+ <tr height=190 style='height:142.5pt'>
+  <td height=190 class=xl6726921 style='height:142.5pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Extension methods</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public static class StringExtensions<br>
+    {<br>
+    <span style='mso-spacerun:yes'>    </span>public static string Left(this
+  string s, int n)<br>
+    <span style='mso-spacerun:yes'>    </span>{<br>
+    <span style='mso-spacerun:yes'>        </span>return s.Substring(0,
+  n);<br>
+    <span style='mso-spacerun:yes'>    </span>}<br>
+    }<br>
+    <span style='mso-spacerun:yes'> </span><br>
+    string s = &quot;foo bar&quot;;<br>
+    s.Left(3); // same as StringExtensions.Left(s, 3), which returns
+  &quot;foo&quot;;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cho phép m&#7903; r&#7897;ng thêm hàm cho m&#7897;t class có
+  s&#7861;n, ví d&#7909; m&#7903; r&#7897;ng cho String, Int, Datetime…</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/UlCa3i">https://dotnetfiddle.net/UlCa3i</a></td>
+ </tr>
+ <tr height=133 style='height:99.75pt'>
+  <td height=133 class=xl6726921 style='height:99.75pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/expression-trees/"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Expression tree</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>System.Linq.Expressions.Expression</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Ch&#7885;c sâu vào thu&#7897;c tính c&#7911;a m&#7897;t class
+  b&#7857;ng cách dùng Linq.Expression.<br>
+    B&#7857;ng cách này thì ta không c&#7847;n bi&#7871;t tên bi&#7871;n là gì,
+  v&#7851;n l&#7845;y &#273;&#432;&#7907;c ra giá tr&#7883; c&#7911;a thu&#7897;c
+  tính. Còn bình th&#432;&#7901;ng ph&#7843;i g&#7885;i thông qua
+  TenBien.ThuocTinh (Nh&#432; th&#7871; này thì tên bi&#7871;n là
+  &#273;&#7897;ng generic s&#7869; k l&#7845;y ra ThuocTinh
+  &#273;&#432;&#7907;c)</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/XtoEjK">https://dotnetfiddle.net/XtoEjK</a></td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/anonymous-types"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Anonymous types</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>var person = new { Name = &quot;Peter&quot;, Age=4};</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Khai báo m&#7897;t bi&#7871;n g&#7891;m nhi&#7873;u thu&#7897;c
+  tính mà không c&#7847;n khai báo m&#7897;t class ra bên ngoài. V&#7851;n
+  g&#7885;i giá tr&#7883; thu&#7897;c tính c&#7911;a bi&#7871;n &#273;ó ra bình
+  th&#432;&#7901;ng nh&#432; g&#7885;i m&#7897;t class</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/C7YoEY">https://dotnetfiddle.net/C7YoEY</a></td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/getting-started-with-linq"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>LINQ</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>IEnumerable&lt;int&gt; query = from x in array<br>
+    <span style='mso-spacerun:yes'>                         </span>where x % 2
+  == 1<br>
+    <span style='mso-spacerun:yes'>                         </span>orderby x
+  descending<br>
+    <span style='mso-spacerun:yes'>                         </span>select x *
+  x;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cú pháp &#273;&#7875; l&#7885;c và hi&#7875;n th&#7883; data
+  trong m&#7897;t m&#7843;ng. Linq có 2 ki&#7875;u vi&#7871;t. M&#7897;t là
+  ki&#7875;u select nh&#432; SQL, 2 là ki&#7875;u vi&#7871;t theo Lambda =&gt;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/akUcWR">https://dotnetfiddle.net/akUcWR<br>
+    https://dotnetfiddle.net/yYLT0K</a></td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/implicitly-typed-local-variables"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Implicit typing
+  (var)</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>var x = new Dictionary&lt;string, List&lt;float&gt;&gt;();</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Khai báo m&#7897;t bi&#7871;n mà không &#273;&#7883;nh
+  ki&#7875;u cho nó g&#7885;i là Implicit. Lúc này giá tr&#7883; truy&#7873;n
+  vào cho bi&#7871;n s&#7869; xác &#273;&#7883;nh bi&#7871;n &#273;ó có
+  ki&#7875;u gì. Và ki&#7875;u c&#7911;a bi&#7871;n có th&#7875; là class
+  t&#7921; t&#7841;o. Còn &#273;ã &#273;&#7883;nh ki&#7875;u s&#7861;n
+  g&#7885;i là Explicit.</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/XfX663">https://dotnetfiddle.net/XfX663</a></td>
+ </tr>
+ <tr height=57 style='height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C# 4.0</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2010</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'><span style='mso-spacerun:yes'> </span>.NET Framework 4.0
+  (2010-04-12)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/using-type-dynamic"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Late binding
+  (dynamic)</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>dynamic dyn = 1;<br>
+    object obj = 1;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Kh&#7903;i t&#7841;o m&#7897;t bi&#7871;n sau khi
+  ch&#432;&#417;ng trình &#273;ã ch&#7841;y, và ki&#7875;u c&#7911;a bi&#7871;n
+  là do ng&#432;&#7901;i dùng ch&#7885;n. Sau &#273;ó ng&#432;&#7901;i dùng có
+  th&#7875; nh&#7853;p giá tr&#7883; cho bi&#7871;n &#273;ó</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/G9cwuz</td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Named arguments</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>PrintOrderDetails(productName: &quot;Red Mug&quot;, sellerName:
+  &quot;Gift Shop&quot;, orderNum: 31);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Khi truy&#7873;n params thì ghi rõ là giá tr&#7883; này
+  truy&#7873;n cho param nào. S&#7869; giúp truy&#7873;n param không theo
+  th&#7913; t&#7921; &#273;&#7883;nh ngh&#297;a &#7903; hàm, truy&#7873;n param
+  nào &#7913;ng v&#7899;i giá tr&#7883; nào thì ghi rõ ra.</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/cGhkTO</td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Optional parameters</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public void ExampleMethod(int required, string optionalstr =
+  &quot;default string&quot;,<br>
+    <span style='mso-spacerun:yes'>    </span>int optionalint = 10)</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Kh&#7903;i t&#7841;o giá tr&#7883; m&#7863;c &#273;&#7883;nh cho
+  parameter khi g&#7885;i m&#7897;t hàm nào &#273;ó (&#273;&#7875; không
+  m&#7845;t công truy&#7873;n giá tr&#7883; cho param &#273;ó khi g&#7885;i hàm
+  n&#7919;a n&#7871;u mu&#7889;n nó là giá tr&#7883; m&#7863;c &#273;&#7883;nh)</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/Oj7FN9</td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://blogs.msdn.microsoft.com/samng/2009/06/16/com-interop-in-c-4-0/"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>More COM support</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=95 style='mso-height-source:userset;height:71.25pt'>
+  <td height=95 class=xl6726921 style='height:71.25pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C# 5.0</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2012<br>
+    Visual Studio 2013</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework 4.5 (2012-08-15)<br>
+    .NET Framework 4.5.1 (2013-10-17)<br>
+    .NET Framework 4.5.2 (2014-05-05)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/async"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Async feature</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public async Task&lt;int&gt; GetDotNetCountAsync()<br>
+    {<br>
+    <span style='mso-spacerun:yes'>    </span>var html = await
+  _httpClient.GetStringAsync(&quot;https://dotnetfoundation.org&quot;);<br>
+    <span style='mso-spacerun:yes'>    </span>return Regex.Matches(html,
+  @&quot;\.NET&quot;).Count;<br>
+    }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Hàm ch&#7841;y song song và không ph&#7843;i &#273;&#7907;i nhau
+  ch&#7841;y t&#7915;ng dòng</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/1L7KBm">https://dotnetfiddle.net/1L7KBm</a></td>
+ </tr>
+ <tr height=35 style='mso-height-source:userset;height:26.25pt'>
+  <td height=35 class=xl6726921 style='height:26.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/caller-information"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Caller information</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=57 style='mso-height-source:userset;height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>C# 6.0</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2013<br>
+    Visual Studio 2015</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework 4.6 (2015-07-20)<br>
+    .NET Framework 4.6.1 (2015-11-17)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#string-interpolation"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>String
+  Interpolation</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public string GetFormattedGradePoint() =&gt; $&quot;Name:
+  {LastName}, {FirstName}. G.P.A: {Grades.Average():F2}&quot;;<br>
+    var str = $&quot;{p.Name} is {p.Age} years old.&quot;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cái này a dùng r&#7845;t nhi&#7873;u, và nó thay th&#7871;
+  &#273;&#432;&#7907;c cho vi&#7879;c c&#7897;ng chu&#7895;i ho&#7863;c dùng
+  String.Format() &#273;&#7875; ghép chu&#7895;i</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/rg59n6"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>https://dotnetfiddle.net/rg59n6</span></a></td>
+ </tr>
+ <tr height=57 style='height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#read-only-auto-properties"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Read-only
+  Auto-properties</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public string FirstName { get; private set; }<span
+  style='mso-spacerun:yes'>  </span>// private set is accessible from the
+  entire class<br>
+    public string LastName { get; } // accessible only in constructor<br>
+    public ICollection&lt;double&gt; Grades { get; } = new
+  List&lt;double&gt;(); // property initializer</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Thu&#7897;c tính ch&#7881; cho phép &#273;&#7885;c k cho phép
+  gán giá tr&#7883;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/9TINL9">https://dotnetfiddle.net/9TINL9</a></td>
+ </tr>
+ <tr height=38 style='height:28.5pt'>
+  <td height=38 class=xl6726921 style='height:28.5pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#auto-property-initializers"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Auto-Property
+  Initializers</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public int X { get; set; } = 10;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>S&#7917; d&#7909;ng d&#7845;u &quot;=&quot; &#273;&#7875; gán
+  nhanh giá tr&#7883; cho m&#7897;t thu&#7897;c tính c&#7911;a class</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/UkFmCr"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>https://dotnetfiddle.net/UkFmCr</span></a></td>
+ </tr>
+ <tr height=38 style='height:28.5pt'>
+  <td height=38 class=xl6726921 style='height:28.5pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#expression-bodied-function-members"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Expression-bodied
+  function members</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public override string ToString() =&gt; &quot;Hi!&quot;;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cái này là cách vi&#7871;t k&#7871;t h&#7907;p c&#7911;a String
+  Interpolation và Auto-Property Initalizer</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/vQBpkV"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>https://dotnetfiddle.net/vQBpkV</span></a></td>
+ </tr>
+ <tr height=152 style='height:114.0pt'>
+  <td height=152 class=xl6726921 style='height:114.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#using-static"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>using static</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>using static System.String;<br>
+    // also common: <br>
+    // using static System.Math;<br>
+    // using static System.Linq.Enumerable;<br>
+    <br>
+    if (IsNullOrWhiteSpace(lastName))<br>
+    <span style='mso-spacerun:yes'>  </span>throw new ArgumentException(message:
+  &quot;Cannot be blank&quot;, paramName: nameof(lastName));</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>G&#7885;i các hàm static c&#7911;a m&#7897;t class bình
+  th&#432;&#7901;ng</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/nmlNMS</td>
+ </tr>
+ <tr height=100 style='height:75.0pt'>
+  <td height=100 class=xl6726921 style='height:75.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#null-conditional-operators"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Null - conditional
+  operators</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>var first = person?.FirstName;<br>
+    first = person?.FirstName ?? &quot;Unspecified&quot;;<br>
+    var cus = customer?.Orders?[5];<br>
+    int? first = customers?[0].Orders.Count(); //T&#432;&#417;ng
+  &#273;&#432;&#417;ng int? first = (customers != null) ?
+  customers[0].Orders.Count() : null;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Cái này là b&#7855;t l&#7895;i null exception r&#7845;t
+  hi&#7879;u qu&#7843;, cú pháp ng&#7855;n g&#7885;n, r&#7845;t nên dùng</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/SxQNG8">https://dotnetfiddle.net/SxQNG8<br>
+    https://dotnetfiddle.net/T1iI1c<br>
+    https://dotnetfiddle.net/Z6kAwA<br>
+    <br>
+    https://dotnetfiddle.net/lQK0Bs</a></td>
+ </tr>
+ <tr height=266 style='height:199.5pt'>
+  <td height=266 class=xl6726921 style='height:199.5pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#exception-filters"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Exception filters</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public static async Task&lt;string&gt; MakeRequest()<br>
+    {<br>
+    <span style='mso-spacerun:yes'>  </span>var client = new
+  System.Net.Http.HttpClient();<br>
+    <span style='mso-spacerun:yes'>  </span>var streamTask =
+  client.GetStringAsync(&quot;https://localHost:10000&quot;);<br>
+    <span style='mso-spacerun:yes'>  </span>try <br>
+    <span style='mso-spacerun:yes'>  </span>{<br>
+    <span style='mso-spacerun:yes'>    </span>var responseText = await
+  streamTask;<br>
+    <span style='mso-spacerun:yes'>    </span>return responseText;<br>
+    <span style='mso-spacerun:yes'>  </span>} <br>
+    <span style='mso-spacerun:yes'>  </span>catch
+  (System.Net.Http.HttpRequestException e) when
+  (e.Message.Contains(&quot;301&quot;))<br>
+    <span style='mso-spacerun:yes'>  </span>{<br>
+    <span style='mso-spacerun:yes'>  </span>return &quot;Site
+  Moved&quot;;<br>
+    <span style='mso-spacerun:yes'>  </span>}<br>
+    }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>L&#7885;c l&#7895;i exception theo text trong l&#7895;i
+  b&#7855;n ra</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/izLZ3U">https://dotnetfiddle.net/izLZ3U</a></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=xl6726921 style='height:15.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#nameof-expressions"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>nameof Expressions</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>string s = nameof(Console.Write);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/4PN8vU">https://dotnetfiddle.net/4PN8vU</a></td>
+ </tr>
+ <tr height=57 style='height:42.75pt'>
+  <td height=57 class=xl6726921 style='height:42.75pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#await-in-catch-and-finally-blocks"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>await in catch and
+  finally blocks</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>try … catch { await … } finally { await … }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Trong l&#7879;nh finally cho phép dùng async &#273;&#7875;
+  ch&#7841;y ng&#7847;m. Giúp ch&#432;&#417;ng trình k b&#7883; &#273;&#417;
+  n&#7871;u g&#7885;i hàm ch&#7841;y lâu trong finally</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/j0AuAb">https://dotnetfiddle.net/j0AuAb</a></td>
+ </tr>
+ <tr height=247 style='height:185.25pt'>
+  <td height=247 class=xl6726921 style='height:185.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#index-initializers"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>index initializers</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>private List&lt;string&gt; messages = new
+  List&lt;string&gt;<br>
+    {<br>
+    <span style='mso-spacerun:yes'>  </span>&quot;Page not Found&quot;,<br>
+    <span style='mso-spacerun:yes'>  </span>&quot;Page moved, but left a
+  forwarding address.&quot;,<br>
+    <span style='mso-spacerun:yes'>  </span>&quot;The web server can't come out
+  to play today.&quot;<br>
+    };<br>
+    <br>
+    private Dictionary&lt;int, string&gt; webErrors = new Dictionary&lt;int,
+  string&gt;<br>
+    {<br>
+    <span style='mso-spacerun:yes'>  </span>[404] = &quot;Page not
+  Found&quot;,<br>
+    <span style='mso-spacerun:yes'>  </span>[302] = &quot;Page moved, but left
+  a forwarding address.&quot;,<br>
+    <span style='mso-spacerun:yes'>  </span>[500] = &quot;The web server can't
+  come out to play today.&quot;<br>
+    };</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>Kh&#7903;i t&#7841;o giá tr&#7883; cho m&#7897;t v&#7883; trí
+  nào &#273;ó trong Array</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/Evs4Qx">https://dotnetfiddle.net/Evs4Qx</a></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#extension-add-methods-in-collection-initializers"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Extension methods
+  for collection initializers</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/qbnRaw</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=xl6726921 style='height:15.0pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6#improved-overload-resolution"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Improved overload
+  resolution</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/Vnudqy">https://dotnetfiddle.net/Vnudqy</a></td>
+ </tr>
+ <tr height=76 style='height:57.0pt'>
+  <td height=76 class=xl6726921 style='height:57.0pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>7</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2017</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'><span style='mso-spacerun:yes'> </span>.NET Framework 4.6.2
+  (2016-08-02)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#out-variables"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>out&nbsp;variables</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>if (int.TryParse(input, out int result))<br>
+    <span style='mso-spacerun:yes'>    </span>WriteLine(result);<br>
+    else<br>
+    <span style='mso-spacerun:yes'>    </span>WriteLine(&quot;Could not parse
+  input&quot;);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>T&#7921; &#273;&#7897;ng b&#7855;n giá tr&#7883; ra m&#7897;t
+  bi&#7871;n out mà không c&#7847;n khai báo bi&#7871;n &#273;ó
+  tr&#432;&#7899;c (t&#7921; khai báo). Vi&#7871;t code s&#7869; ng&#7855;n
+  h&#417;n</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/sNeemR">https://dotnetfiddle.net/sNeemR</a></td>
+ </tr>
+ <tr height=437 style='height:327.75pt'>
+  <td height=437 class=xl6726921 style='height:327.75pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#tuples"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Tuples</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>var letters = (&quot;a&quot;, &quot;b&quot;);<br>
+    <br>
+    (string Alpha, string Beta) namedLetters = (&quot;a&quot;,
+  &quot;b&quot;);<br>
+    var alphabetStart = (Alpha: &quot;a&quot;, Beta: &quot;b&quot;);<br>
+    <br>
+    public class Point<br>
+    {<br>
+    <span style='mso-spacerun:yes'>  </span>public Point(double x, double
+  y)<br>
+    <span style='mso-spacerun:yes'>  </span>{<br>
+    <span style='mso-spacerun:yes'>  </span>this.X = x;<br>
+    <span style='mso-spacerun:yes'>  </span>this.Y = y;<br>
+    <span style='mso-spacerun:yes'>  </span>}<br>
+    <br>
+    <span style='mso-spacerun:yes'>  </span>public double X { get; }<br>
+    <span style='mso-spacerun:yes'>  </span>public double Y { get; }<br>
+    <br>
+    <span style='mso-spacerun:yes'>  </span>// Deconstruct method<br>
+    <span style='mso-spacerun:yes'>  </span>public void Deconstruct(out double
+  x, out double y)<br>
+    <span style='mso-spacerun:yes'>  </span>{<br>
+    <span style='mso-spacerun:yes'>  </span>x = this.X;<br>
+    <span style='mso-spacerun:yes'>  </span>y = this.Y;<br>
+    <span style='mso-spacerun:yes'>  </span>}<br>
+    }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'>https://dotnetfiddle.net/eYr6vq</td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#discards"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Discards</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=xl6726921 style='height:15.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#pattern-matching"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Pattern Matching</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/ywmqtI">https://dotnetfiddle.net/ywmqtI</a></td>
+ </tr>
+ <tr height=228 style='height:171.0pt'>
+  <td height=228 class=xl6726921 style='height:171.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#ref-locals-and-returns"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>ref&nbsp;locals and
+  returns</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public static ref int Find3(int[,] matrix, Func&lt;int, bool&gt;
+  predicate)<br>
+    {<br>
+    <span style='mso-spacerun:yes'>  </span>for (int i = 0; i &lt;
+  matrix.GetLength(0); i++)<br>
+    <span style='mso-spacerun:yes'>             </span>for (int j = 0; j &lt;
+  matrix.GetLength(1); j++)<br>
+    <span style='mso-spacerun:yes'>                      </span>if
+  (predicate(matrix[i, j]))<br>
+    <span style='mso-spacerun:yes'>                          </span>return ref
+  matrix[i, j];<br>
+    <span style='mso-spacerun:yes'>  </span>throw new
+  InvalidOperationException(&quot;Not found&quot;);<br>
+    }<br>
+    ref var item = ref MatrixSearch.Find3(matrix, (val) =&gt; val == 42);<br>
+    Console.WriteLine(item);<br>
+    item = 24;<br>
+    Console.WriteLine(matrix[4, 2]);</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/VIKD7V">https://dotnetfiddle.net/VIKD7V</a></td>
+ </tr>
+ <tr height=361 style='height:270.75pt'>
+  <td height=361 class=xl6726921 style='height:270.75pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#local-functions"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Local Functions</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>public static IEnumerable&lt;char&gt; AlphabetSubset3(char
+  start, char end)<br>
+    {<br>
+    <span style='mso-spacerun:yes'>    </span>if ((start &lt; 'a') || (start
+  &gt; 'z'))<br>
+    <span style='mso-spacerun:yes'>        </span>throw new ArgumentOutOfRangeException(paramName:
+  nameof(start), message: &quot;start must be a letter&quot;);<br>
+    <span style='mso-spacerun:yes'>    </span>if ((end &lt; 'a') || (end &gt;
+  'z'))<br>
+    <span style='mso-spacerun:yes'>        </span>throw new ArgumentOutOfRangeException(paramName:
+  nameof(end), message: &quot;end must be a letter&quot;);<br>
+    <span style='mso-spacerun:yes'>    </span>if (end &lt;= start)<br>
+    <span style='mso-spacerun:yes'>        </span>throw new
+  ArgumentException($&quot;{nameof(end)} must be greater than
+  {nameof(start)}&quot;);<br>
+    <span style='mso-spacerun:yes'>    </span>return
+  alphabetSubsetImplementation();<br>
+    <br>
+    <span style='mso-spacerun:yes'>    </span>IEnumerable&lt;char&gt;
+  alphabetSubsetImplementation()<br>
+    <span style='mso-spacerun:yes'>    </span>{<br>
+    <span style='mso-spacerun:yes'>        </span>for (var c = start; c &lt;
+  end; c++)<br>
+    <span style='mso-spacerun:yes'>            </span>yield return c;<br>
+    <span style='mso-spacerun:yes'>    </span>}<br>
+    }</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a href="https://dotnetfiddle.net/SKNvYX">https://dotnetfiddle.net/SKNvYX</a></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#throw-expressions"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>throw&nbsp;Expressions</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=40 style='height:30.0pt'>
+  <td height=40 class=xl6726921 style='height:30.0pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#generalized-async-return-types"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Generalized async
+  return types</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl6526921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><a
+  href="https://dotnettutorials.net/lesson/generalized-async-return-types/">https://dotnettutorials.net/lesson/generalized-async-return-types/</a></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#numeric-literal-syntax-improvements"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Numeric literal
+  syntax improvements</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7#more-expression-bodied-members"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>More
+  expression-bodied members</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>7.1</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2017 version 15.3</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'><span style='mso-spacerun:yes'> </span>.NET Framework 4.7
+  (2017-04-05)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-1#async-main"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>async&nbsp;Main&nbsp;method</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-1#default-literal-expressions"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>default&nbsp;literal
+  expressions</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8426921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-1#inferred-tuple-element-names"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Inferred tuple
+  element names</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>7.2</td>
+  <td class=xl6926921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2017 version 15.5</td>
+  <td class=xl9026921 width=290 style='border-top:none;border-left:none;
+  width:218pt'>.NET Framework 4.7.1 (2017-10-17)</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2#reference-semantics-with-value-types"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Reference semantics
+  with value types</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2#non-trailing-named-arguments"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Non-trailing named
+  arguments</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7726921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2#leading-underscores-in-numeric-literals"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>Leading underscores
+  in numeric literals</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl7826921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8326921 width=290 style='border-left:none;width:218pt'>&nbsp;</td>
+  <td class=xl7026921 width=325 style='border-top:none;width:244pt'><a
+  href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2#private-protected"><span
+  style='font-family:Tahoma, sans-serif;mso-font-charset:0'>private
+  protected&nbsp;access modifier</span></a></td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>7.3</td>
+  <td class=xl8726921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2017 version 15.7</td>
+  <td class=xl8826921 width=290 style='width:218pt'>.NET Framework 4.7.2
+  (2018-04-30)</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Ref local re-assignment</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Stackalloc initializers</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Indexing movable fixed buffers</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Custom fixed statement</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Improved overload candidates</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Expression variables in initializers and queries</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8626921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Tuple comparison</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl9126921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8826921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl8526921 width=325 style='border-top:none;border-left:none;
+  width:244pt'>Attributes on backing fields</td>
+  <td class=xl8526921 width=653 style='border-top:none;border-left:none;
+  width:490pt'>&nbsp;</td>
+  <td class=xl8926921 width=363 style='border-top:none;border-left:none;
+  width:272pt'>&nbsp;</td>
+  <td class=xl7026921 width=274 style='border-top:none;border-left:none;
+  width:206pt'><u style='visibility:hidden;mso-ignore:visibility'>&nbsp;</u></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7126921 width=63 style='border-top:none;width:47pt'>?</td>
+  <td class=xl9026921 width=177 style='border-top:none;border-left:none;
+  width:133pt'>Visual Studio 2019 (&#272;ang dev)</td>
+  <td class=xl8226921 width=290 style='border-top:none;width:218pt'>.NET
+  Framework 4.8 (&#272;ang dev)</td>
+  <td class=xl6726921></td>
+  <td class=xl7426921></td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl6726921></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8326921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8226921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl6726921></td>
+  <td class=xl7426921></td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl6726921></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7226921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8326921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8226921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl6726921></td>
+  <td class=xl7426921></td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl6726921></td>
+ </tr>
+ <tr height=19 style='mso-height-source:userset;height:14.25pt'>
+  <td height=19 class=xl6726921 style='height:14.25pt'></td>
+  <td class=xl7326921 width=63 style='width:47pt'>&nbsp;</td>
+  <td class=xl8426921 width=177 style='border-left:none;width:133pt'>&nbsp;</td>
+  <td class=xl8226921 width=290 style='border-top:none;width:218pt'>&nbsp;</td>
+  <td class=xl6726921></td>
+  <td class=xl7426921></td>
+  <td class=xl7526921 width=363 style='width:272pt'></td>
+  <td class=xl6726921></td>
+ </tr>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=64 style='width:48pt'></td>
+  <td width=63 style='width:47pt'></td>
+  <td width=177 style='width:133pt'></td>
+  <td width=290 style='width:218pt'></td>
+  <td width=325 style='width:244pt'></td>
+  <td width=653 style='width:490pt'></td>
+  <td width=363 style='width:272pt'></td>
+  <td width=274 style='width:206pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</div>
+
+
+<!----------------------------->
+<!--END OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD-->
+<!----------------------------->
+</body>
+
+</html>
